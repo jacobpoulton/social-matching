@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # 1st Party Apps
+    'base.apps.BaseConfig',
     # 3rd Party Apps
     'bootstrap5',
 ]
@@ -81,7 +83,7 @@ WSGI_APPLICATION = 'social_matching.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': DATA_DIR / 'db.sqlite3',
     }
 }
 
