@@ -1,0 +1,19 @@
+h1 {
+    font-weight: 800;
+    font-size: calc(4*var(--text-scaling));
+    background: -webkit-linear-gradient(135deg, var(--purple_1) -20%, var(--pink_1) 50%, var(--red_1) 120%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.btn {
+    background: inherit;
+    background-size: 200%;
+}
+
+/* Landscape */
+@media (min-aspect-ratio: 7/10) {
+    h1 {
+        font-size: calc(6*var(--text-scaling));
+    }
+}

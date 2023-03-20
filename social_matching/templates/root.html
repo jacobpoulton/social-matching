@@ -1,0 +1,19 @@
+{% load bootstrap5 %}
+{% bootstrap_messages %}
+<html lang="en-GB">
+    <head>
+        <title>Social Matching</title>
+        {% bootstrap_css %}
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'theme.css' %}">
+        <link rel="stylesheet" href="{% static 'root.css' %}">
+        {% block header %}{% endblock %}
+    </head>
+    <body>
+        <div class="content">{% block content %}{% endblock %}</div>
+        <div class="footer">{% block footer %}{% endblock %}</div>
+    </body>
+</html>

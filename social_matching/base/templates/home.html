@@ -1,0 +1,48 @@
+{% extends "root.html" %}
+
+{% block header %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'home.css' %}">
+{% endblock %}
+
+{% block content %}
+    <h1>Home Page</h1>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sed euismod nulla. Vivamus sem turpis, convallis vitae gravida eu, dignissim vel sem. Proin luctus vehicula nibh nec maximus. Phasellus et vulputate augue. Phasellus blandit nunc sed tristique lacinia. Praesent non felis risus. Donec eleifend malesuada rhoncus. Donec viverra tortor a lorem dictum volutpat. Nam ac nisl malesuada, efficitur erat sed, tristique mi. Duis vel tortor mi. Curabitur vitae dui elementum, dignissim ipsum sit amet, molestie justo. Nunc commodo ipsum lectus.</p>
+    <hr>
+    {% if survey_open %}
+        <a class="btn btn-success btn-big" href="#" role="button">Take Survey</a>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sed euismod nulla. </p>
+        <hr>
+    {% endif %}
+    <h3>Matching</h3>
+    {% if match_open %}
+        <div class="buttons">
+            {% if matched %}
+                {% if survey_open %}
+                    <a class="btn btn-primary" href="#" role="button" style="--desktop-width: 13rem;">New Match</a>
+                {% else %}
+                    <a class="btn btn-success" href="#" role="button" style="--desktop-width: 13rem;">New Match</a>
+                {% endif %}
+                <a class="btn btn-primary" href="#" role="button" style="--desktop-width: 13rem; background-position-x: 100%">View Matches</a>
+            {% else %}
+                <a class="btn btn-success" href="#" role="button" style="font-size: calc(2*var(--text-scaling));">New Match</a>
+            {% endif %}
+        </div>
+    {% else %}
+        {% if matched %}
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <div class="buttons">
+                <button class="btn btn-secondary" href="#" role="button" style="--desktop-width: 13rem;" disabled>New Match</button>
+                <a class="btn btn-primary" href="#" role="button" style="--desktop-width: 13rem; background-position-x: 100%">View Matches</a>
+            </div>
+        {% else %}
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus quis ante ipsum. Cras a nibh cursus, imperdiet tellus sed, luctus justo. Curabitur sapien justo, sagittis sed ex sed, placerat convallis.</p>
+        {% endif %}
+    {% endif %}
+    <hr>
+    <div class="buttons">
+        <a class="btn btn-secondary" href="#" role="button" style="--desktop-width: 16rem;">User Details</a>
+        <a class="btn btn-secondary" href="#" role="button" style="--desktop-width: 16rem; background-position-x: 100%">Preferences</a>
+    </div>
+    <a class="btn btn-danger" href="#" role="button">Sign Out</a>
+{% endblock %}

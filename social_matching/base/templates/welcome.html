@@ -1,0 +1,16 @@
+{% extends "root.html" %}
+
+{% block header %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'welcome.css' %}">
+{% endblock %}
+
+{% block content %}
+    <h1>Welcome!</h1>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus quis ante ipsum. Cras a nibh cursus, imperdiet tellus sed, luctus justo. Curabitur sapien justo, sagittis sed ex sed, placerat convallis.</p>
+    <hr>
+    <div class="buttons">
+        <a class="btn btn-primary" href="#" role="button" style="min-width: 10rem;">Sign Up</a>
+        <a class="btn btn-primary" href="#" role="button" style="min-width: 10rem; background-position-x: 100%">Log In</a>
+    </div>
+{% endblock %}

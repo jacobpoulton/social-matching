@@ -1,0 +1,76 @@
+body {
+    margin: 0;
+    background: var(--pink_3);
+    background: linear-gradient(135deg, var(--purple_2) -10%, var(--pink_3) 50%, var(--red_1) 110%);
+    color: var(--light);
+    font-size: var(--text-scaling);
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    grid-template-rows: auto max-content;
+}
+
+h1 {
+    font-size: calc(3*var(--text-scaling));
+    margin-block: calc(2*var(--page-pad));
+}
+
+h2 {
+    font-size: calc(2.5*var(--text-scaling));
+    margin-block: calc(1.5*var(--page-pad));
+}
+
+h3 {
+    font-size: calc(2*var(--text-scaling));
+    margin-block: var(--page-pad);
+}
+
+h4 {
+    font-size: calc(1.5*var(--text-scaling));
+    margin-block: calc(0.5*var(--page-pad));
+}
+
+h5 {
+    font-size: calc(1*var(--text-scaling));
+    margin-block: calc(0.5*var(--page-pad));
+}
+
+.content {
+    text-align: center;
+    margin-inline: calc(2*var(--page-pad));
+    max-width: 85rem;
+    margin-bottom: calc(2*var(--page-pad));
+}
+
+.footer {
+    width: 100%;
+    max-height: 25rem;
+    background: var(--navy_6);
+    align-self: end;
+}
+
+hr {
+    margin-block: calc(2.5*var(--page-pad));
+    width: 50%;
+    margin-left: 25%;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(135deg, var(--purple_2) -10%, var(--pink_3) 50%, var(--red_1) 110%);
+    background-size: 0;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Landscape */
+@media (min-aspect-ratio: 7/10) {
+    .footer {
+        max-height: 15rem;
+    }
+
+    .buttons {
+        flex-direction: row;
+    }
+}
