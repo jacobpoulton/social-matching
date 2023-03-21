@@ -6,8 +6,8 @@ from django.contrib.auth.models import AbstractUser
 # Stores identifiable information as well as auth information.
 # To be deleted once project has ran its course.
 class User(AbstractUser):
-    details = models.OneToOneField('UserDetails', on_delete=models.PROTECT)
-    preferences = models.OneToOneField('UserPreferences', on_delete=models.PROTECT)
+    details = models.OneToOneField('UserDetails', on_delete=models.PROTECT, null=True)
+    preferences = models.OneToOneField('UserPreferences', on_delete=models.PROTECT, null=True)
 
 
 # User details class.

@@ -1,3 +1,5 @@
+/* Basic Tags */
+
 body {
     margin: 0;
     background: var(--pink_3);
@@ -35,6 +37,15 @@ h5 {
     margin-block: calc(0.5*var(--page-pad));
 }
 
+hr {
+    margin-block: calc(2.5*var(--page-pad));
+    width: 50%;
+    margin-left: 25%;
+}
+
+
+/* Common Classes */
+
 .content {
     text-align: center;
     margin-inline: calc(2*var(--page-pad));
@@ -49,12 +60,6 @@ h5 {
     align-self: end;
 }
 
-hr {
-    margin-block: calc(2.5*var(--page-pad));
-    width: 50%;
-    margin-left: 25%;
-}
-
 .buttons {
     display: flex;
     flex-direction: column;
@@ -64,7 +69,30 @@ hr {
     align-items: center;
 }
 
+
+/* Forms */
+.form-warning {
+    background: var(--red_2);
+    padding: calc(2*var(--page-pad));
+    margin-block: var(--page-pad);
+    border-radius: var(--page-pad);
+    color: var(--orange_1);
+    box-shadow: inset 2px 2px 8px 0px #fff4;
+    filter: drop-shadow(2px 4px 8px #0002);
+    height: fit-content;
+}
+
+.form-container {
+    display: grid;
+    grid-template-rows: 1fr auto 1fr;
+    height: 100%;
+    align-items: center;
+    justify-items: center;
+}
+
+
 /* Landscape */
+
 @media (min-aspect-ratio: 7/10) {
     .footer {
         max-height: 15rem;

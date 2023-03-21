@@ -75,6 +75,16 @@
 
 /* Bootstrap Overrides */
 
+.form-control {
+    font-size: var(--text-scaling);
+    display: inline;
+    width: auto;
+}
+
+.form-control::selection {
+    background: #00000022;
+}
+
 .btn {
     border: none;
     mix-blend-mode: screen;
@@ -100,6 +110,7 @@
     background-color: var(--purple_1);
     border-color: var(--purple_3);
     padding: calc(0.5*var(--page-pad)) calc(1.2*var(--page-pad));
+    scale: 1.05 1;
 }
 
 .btn-check:active+.btn-primary, .btn-check:checked+.btn-primary, .btn-primary.active, .btn-primary:active, .show>.btn-primary.dropdown-toggle {
@@ -138,6 +149,7 @@
     background-color: var(--navy_2);
     border-color: var(--navy_4);
     padding: calc(0.5*var(--page-pad)) calc(1.2*var(--page-pad));
+    scale: 1.05 1;
 }
 
 .btn-check:active+.btn-secondary, .btn-check:checked+.btn-secondary, .btn-secondary.active, .btn-secondary:active, .show>.btn-secondary.dropdown-toggle {
@@ -176,6 +188,7 @@
     background-color: var(--green_1);
     border-color: var(--green_3);
     padding: calc(0.5*var(--page-pad)) calc(3*var(--page-pad));
+    scale: 1.05 1;
 }
 
 .btn-check:active+.btn-success, .btn-check:checked+.btn-success, .btn-success.active, .btn-success:active, .show>.btn-success.dropdown-toggle {
@@ -215,6 +228,7 @@
     background-color: var(--red_1);
     border-color: var(--red_2);
     padding: calc(0.5*var(--page-pad)) calc(1.2*var(--page-pad));
+    scale: 1.05 1;
 }
 
 .btn-check:active+.btn-danger, .btn-check:checked+.btn-danger, .btn-danger.active, .btn-danger:active, .show>.btn-danger.dropdown-toggle {
