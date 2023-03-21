@@ -71,6 +71,7 @@ hr {
 
 
 /* Forms */
+
 .form-warning {
     background: var(--red_2);
     padding: calc(2*var(--page-pad));
@@ -88,6 +89,18 @@ hr {
     height: 100%;
     align-items: center;
     justify-items: center;
+}
+
+.form-text {
+    display: block;
+    margin-top: var(--page-pad);
+    margin-bottom: calc(3*var(--page-pad));
+    color: var(--pink_1)!important;
+}
+
+.form-text ul {
+    list-style: none;
+    padding-inline: 0;
 }
 
 

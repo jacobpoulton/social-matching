@@ -1,0 +1,36 @@
+{% extends "root.html" %}
+{% load bootstrap5 %}
+
+{% block content %}
+    <div class="form-container">
+        {% if form.errors or next %}
+            <h4 class="form-warning">
+                {% if form.errors %}
+                    Invalid details provided.<br>Please try again.
+                {% endif %}
+
+                {% if next %}
+                    {% if user.is_authenticated %}
+                        Your account doesn't have access to this page. To proceed, please login with an account that has access.
+                    {% else %}
+                        Please login to see this page.
+                    {% endif %}
+                {% endif %}
+            </h4>
+        {% else %}
+        <br>
+        {% endif %}
+        <form method="post" action="{% url 'create-user' %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <h2>Sign Up</h2>
+                {% bootstrap_field form.username show_label=False %}
+                {% bootstrap_field form.password1 show_label=False %}
+                {% bootstrap_field form.password2 show_label=False %}
+                <button type="submit" class="btn btn-success" value="create-user">Submit</button>
+            </div>
+            <input type="hidden" name="next" value="{{ next }}">
+            <a class="btn btn-danger" href="{% url 'home' %}">Go Back</a>
+        </form>
+    </div>
+{% endblock %}
