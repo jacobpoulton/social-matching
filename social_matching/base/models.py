@@ -1,11 +1,45 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.base_user import BaseUserManager
+from django.utils.translation import gettext_lazy as _
+
+
+# Custom user manager used for the below user class.
+class UserManager(BaseUserManager):
+    use_in_migrations = True
+
+    def create_user(self, email, password=None):
+        # Require email
+        if not email:
+            raise ValueError("Users require an email address.")
+
+        # Create and save model
+        user = self.model(email=self.normalize_email(email))
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+    def create_superuser(self, email, password):
+        # Create regular user and apply admin
+        user = self.create_user(email, password=password)
+        user.is_staff = True
+        user.is_superuser = True
+        user.save(using=self._db)
+        return user
 
 
 # Base user class.
 # Stores identifiable information as well as auth information.
 # To be deleted once project has ran its course.
 class User(AbstractUser):
+    # Username is replaced with email field
+    username = None
+    email = models.EmailField(_('email address'), unique=True)
+    objects = UserManager()
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []
+
+    # Relations to other user data
     details = models.OneToOneField('UserDetails', on_delete=models.PROTECT, null=True)
     preferences = models.OneToOneField('UserPreferences', on_delete=models.PROTECT, null=True)
 
