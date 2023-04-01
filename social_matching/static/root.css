@@ -103,6 +103,18 @@ hr {
     padding-inline: 0;
 }
 
+.scale-container {
+    display: flex;
+    flex-direction: column;
+    margin-block: calc(2*var(--page-pad));
+    padding: calc(2*var(--page-pad));
+    border-radius: var(--page-pad);
+    background: #0001;
+}
+
+.scale-container legend {
+    font-size: var(--text-scaling);
+}
 
 /* Landscape */
 
@@ -113,5 +125,10 @@ hr {
 
     .buttons {
         flex-direction: row;
+    }
+
+    .scale-container {
+        width: 75%;
+        margin-left: 12.5%;
     }
 }

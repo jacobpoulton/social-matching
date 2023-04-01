@@ -41,7 +41,7 @@
     {% endif %}
     <hr>
     <div class="buttons">
-        <a class="btn btn-secondary" href="#" role="button" style="--desktop-width: 16rem;">User Details</a>
+        <a class="btn btn-secondary" href="{% url 'details' %}" role="button" style="--desktop-width: 16rem;">User Details</a>
         <a class="btn btn-secondary" href="#" role="button" style="--desktop-width: 16rem; background-position-x: 100%">Preferences</a>
     </div>
     <a class="btn btn-danger" href="{% url 'logout' %}" role="button">Sign Out</a>

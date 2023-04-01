@@ -7,4 +7,5 @@ urlpatterns = [
     path('home/', RedirectView.as_view(url='', permanent=True)),
     path('welcome/', RedirectView.as_view(url='', permanent=True)),
     path('accounts/new/', views.CreateUserView.as_view(), name='create-user'),
+    path('accounts/details/', views.GiveDetailsView.as_view(), name='details'),
 ]

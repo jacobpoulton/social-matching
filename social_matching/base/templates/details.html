@@ -1,0 +1,37 @@
+{% extends "root.html" %}
+{% load bootstrap5 %}
+
+{% block content %}
+    {% if set_before %}
+        <h4 class="form-warning">Submitting this form again will erase your previous response.</h4>
+    {% endif %}
+    <form method="post" action="{% url 'details' %}">
+        {% csrf_token %}
+        <div class="form-group">
+            <h2>Matching Details</h2>
+            <p style="font-weight:300;">
+                Here are a number of characteristics that may or may not apply to you.<br>
+                For example, do you agree that you are someone who likes to spend time with others?<br>
+                Please tick one box per statement to indicate the extent to which you agree or disagree with that statement.
+            </p>
+            <hr>
+            {% for question in form %}
+                <div class="scale-container">
+                    <legend>{{ question.label }}</legend>
+                    <fieldset>                    
+                        {% for radio in question %}
+                            <div class="form-check form-check-inline">
+                                <{{ radio.tag|cut:"<"|cut:">" }} class="form-check-input">
+                                <label class="form-check-label">
+                                    {{ radio.choice_label }}
+                                </label>
+                            </div>
+                        {% endfor %}
+                    </fieldset>
+                </div>
+            {% endfor %}
+            <button type="submit" class="btn btn-success" value="details">Submit</button>
+        </div>
+        <input type="hidden" name="next" value="{{ next }}">
+    </form>
+{% endblock %}

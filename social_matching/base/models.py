@@ -48,7 +48,9 @@ class User(AbstractUser):
 # Stores non-identifiable information pertaining to matchmaking the user.
 # Will represent the user in a non-identifiable manner once the base user class is deleted.
 class UserDetails(models.Model):
-    pass
+    agreeableness = models.DecimalField(max_digits=3, decimal_places=3, default=0.5)
+    neuroticism = models.DecimalField(max_digits=3, decimal_places=3, default=0.5)
+    extroversion = models.DecimalField(max_digits=3, decimal_places=3, default=0.5)
 
 
 # User preferences class.

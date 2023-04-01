@@ -81,8 +81,38 @@
     width: auto;
 }
 
-.form-control::selection {
-    background: #00000022;
+fieldset {
+    display: grid;
+    width: 100%;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    justify-items: center;
+}
+
+.form-check-inline {
+    margin: 0;
+    display: flex;
+    align-items: flex-end;
+}
+
+.form-check-input {
+    width: calc(1.5*var(--text-scaling));
+    height: calc(1.5*var(--text-scaling));
+}
+
+.form-check-input:checked {
+    background-color: var(--orange_2);
+    border-color: var(--orange_3);
+}
+
+.form-check-input:focus {
+    border-color: var(--orange_3);
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem var(--orange_3);
+}
+
+.form-check-label {
+    margin-inline: var(--page-pad);
+    color: var(--orange_1);
 }
 
 .invalid-feedback {
