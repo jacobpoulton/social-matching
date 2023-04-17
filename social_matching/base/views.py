@@ -2,6 +2,7 @@ from django.contrib.auth import authenticate, login
 from django.views.generic.edit import CreateView, FormView
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
+from django.http import JsonResponse
 from . import forms, models
 
 
@@ -16,11 +17,28 @@ def home(request):
 
     # Show main home page to full users
     context = {  # TODO: Add functionality to contexts
-        'match_open': True,
-        'matched': True,
+        'matches': request.user.match_count(),
+        'match_again': request.user.preferences.in_match_pool,
         'survey_open': True,
     }
     return render(request, 'home.html', context=context)
+
+
+def toggle_matching(request):
+    # Get POST request
+    if request.method == 'POST':
+        if not request.user.is_authenticated:
+            return JsonResponse({'message':"Unauthenticated request sender.", 'switch_state':toggle})
+        toggle = request.POST.get('switchValue')
+
+        # Toggle preferences
+        prefs = request.user.preferences
+        prefs.in_match_pool = toggle.lower()[0] == "t"
+        prefs.save()
+
+        # Send response
+        return JsonResponse({'message':"Matching preference toggled succesfully.", 'switch_state':toggle})
+    return redirect('home')
 
 
 class CreateUserView(CreateView):
@@ -108,8 +126,3 @@ class GiveDetailsView(FormView):
 
         # Return user
         return redirect_url
-
-
-def matching(request):
-    print(models.User.can_match())
-    return redirect('home')

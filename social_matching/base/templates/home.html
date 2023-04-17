@@ -11,33 +11,24 @@
     <hr>
     {% if survey_open %}
         <a class="btn btn-success btn-big" href="#" role="button">Take Survey</a>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sed euismod nulla. </p>
+        <p>Filling out this anonymised questionnaire is highly appreciated, every response has an impact on the research.</p>
         <hr>
     {% endif %}
     <h3>Matching</h3>
-    {% if match_open %}
-        <div class="buttons">
-            {% if matched %}
-                {% if survey_open %}
-                    <a class="btn btn-primary" href="#" role="button" style="--desktop-width: 13rem;">New Match</a>
-                {% else %}
-                    <a class="btn btn-success" href="#" role="button" style="--desktop-width: 13rem;">New Match</a>
-                {% endif %}
-                <a class="btn btn-primary" href="#" role="button" style="--desktop-width: 13rem; background-position-x: 100%">View Matches</a>
-            {% else %}
-                <a class="btn btn-success" href="#" role="button" style="font-size: calc(2*var(--text-scaling));">New Match</a>
-            {% endif %}
-        </div>
+    {% if matches == 0 %}
+        <p>Matches have not yet been made, we are waiting on more users. We will notify you via email as soon as your match is made!</p>
+        <small>If you do not wish to recieve email notification this may be changed in preferences.</small>
     {% else %}
-        {% if matched %}
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            <div class="buttons">
-                <button class="btn btn-secondary" href="#" role="button" style="--desktop-width: 13rem;" disabled>New Match</button>
-                <a class="btn btn-primary" href="#" role="button" style="--desktop-width: 13rem; background-position-x: 100%">View Matches</a>
+        <form>
+            <a class="btn btn-primary" href="#" role="button" style="--desktop-width: 13rem; background-position-x: 100%">
+                View Match{% if matches > 1 %}s{% endif %}
+            </a>
+            <div class="form-check form-switch d-flex justify-content-center align-items-end my-1">
+                <input class="form-check-input" style="width: 3.5rem; scale: 0.8;" type="checkbox" role="switch" id="matchAgainCheck" {% if match_again %}checked{% endif %}>
+                <label class="form-check-label" for="matchAgainCheck">Recieve More Matches</label>
             </div>
-        {% else %}
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus quis ante ipsum. Cras a nibh cursus, imperdiet tellus sed, luctus justo. Curabitur sapien justo, sagittis sed ex sed, placerat convallis.</p>
-        {% endif %}
+
+        </form>
     {% endif %}
     <hr>
     <div class="buttons">
@@ -45,4 +36,23 @@
         <a class="btn btn-secondary" href="#" role="button" style="--desktop-width: 16rem; background-position-x: 100%">Preferences</a>
     </div>
     <a class="btn btn-danger" href="{% url 'logout' %}" role="button">Sign Out</a>
+{% endblock %}
+
+{% block scripts %}
+    <script src="https://cdn.jsdelivr.net/jquery.cookie/1.4.1/jquery.cookie.min.js"></script>
+    <script>
+        var csrftoken = $.cookie('csrftoken');
+        $('#matchAgainCheck').on('click', function(event) {
+            var state = $(this).is(':checked');
+            console.log(state);
+            $.ajax({
+                type: "POST",
+                url: "{% url 'toggle-matching' %}",
+                data: {
+                    switchValue: state,
+                    csrfmiddlewaretoken: csrftoken
+                }
+            });
+        });
+    </script>
 {% endblock %}

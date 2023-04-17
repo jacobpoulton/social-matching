@@ -30,6 +30,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# Variables
+GROUP_SIZE_MIN = 4
+GROUP_SIZE_MAX = 7
+
 
 # Application definition
 

@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.base_user import BaseUserManager
 from django.utils.translation import gettext_lazy as _
+from django.conf import settings
 
 
 # Custom user manager used for the below user class.
@@ -43,6 +44,16 @@ class User(AbstractUser):
     details = models.OneToOneField('UserDetails', on_delete=models.PROTECT, null=True)
     preferences = models.OneToOneField('UserPreferences', on_delete=models.PROTECT, null=True)
 
+    def match_count(self) -> int:
+        return self.match_set.all().count()
+
+    @classmethod
+    def can_match(cls) -> bool:
+         # Conditions necessary for matching
+        return (
+            cls.objects.all().count() > settings.GROUP_SIZE_MIN
+        )
+
 
 # User details class.
 # Stores non-identifiable information pertaining to matchmaking the user.
@@ -57,7 +68,9 @@ class UserDetails(models.Model):
 # Stores user use preferences for the software.
 # Will be deleted along with the base user class.
 class UserPreferences(models.Model):
-    pass
+    in_match_pool = models.BooleanField(default=True)
+    notification_match = models.BooleanField(default=True)
+    notification_survey = models.BooleanField(default=True)
 
 
 # Survey data class.
@@ -71,4 +84,4 @@ class SurveyData(models.Model):
 # Groups together details of users matched, as well as data relating to the match.
 # All users are non-identifiable.
 class Match(models.Model):
-    pass
+    users = models.ManyToManyField('User')

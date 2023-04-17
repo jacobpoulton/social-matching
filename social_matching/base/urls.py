@@ -9,5 +9,5 @@ urlpatterns = [
     path('accounts/new/', views.CreateUserView.as_view(), name='create-user'),
     path('accounts/details/', views.GiveDetailsView.as_view(), name='details'),
     path('accounts/remove/', views.delete_user, name='delete-user'),
-    path('matching/', views.matching, name='matching'),
+    path('preferences/matching/', views.toggle_matching, name='toggle-matching'),
 ]
