@@ -32,10 +32,15 @@ class CreateUserView(CreateView):
         # Called once valid form data has been submitted
         redirect_url = super().form_valid(form)
         user = authenticate(self.request,
-                            username=form.cleaned_data.get('username'),
+                            username=form.cleaned_data.get('email'),
                             password=form.cleaned_data.get('password2'))
         login(self.request, user)
         return redirect_url
+
+
+def delete_user(request):
+    request.user.delete()
+    return redirect('home')
 
 
 class GiveDetailsView(FormView):
@@ -103,3 +108,8 @@ class GiveDetailsView(FormView):
 
         # Return user
         return redirect_url
+
+
+def matching(request):
+    print(models.User.can_match())
+    return redirect('home')

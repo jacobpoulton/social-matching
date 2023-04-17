@@ -1,6 +1,6 @@
 {% load bootstrap5 %}
 {% bootstrap_messages %}
-<html lang="en-GB">
+<html lang="en-GB" data-bs-theme="dark">
     <head>
         <title>Social Matching</title>
         {% bootstrap_css %}
@@ -16,4 +16,5 @@
         <div class="content">{% block content %}{% endblock %}</div>
         <div class="footer">{% block footer %}{% endblock %}</div>
     </body>
+    {% bootstrap_javascript %}
 </html>

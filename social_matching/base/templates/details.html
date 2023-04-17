@@ -31,7 +31,27 @@
                 </div>
             {% endfor %}
             <button type="submit" class="btn btn-success" value="details">Submit</button>
+            <hr>
+            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#cancelConfirmation">Cancel</button>
         </div>
         <input type="hidden" name="next" value="{{ next }}">
     </form>
+    <div class="modal fade" id="cancelConfirmation" tabindex="-1" aria-labelledby="cancelConfirmationLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content bg-dark">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-1 mt-0" id="cancelConfirmationLabel">Warning</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Cancelling now will erase all account data you have provided.<br>
+                    To continue another time, simply leave the website and sign back in again later.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" data-bs-dismiss="modal">Go Back</button>
+                    <a class="btn btn-danger" href="{% url 'delete-user' %}">Delete Account</a>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
