@@ -5,6 +5,8 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.http import JsonResponse
 from django.conf import settings
+from django.template import loader
+import django.core.mail as mail
 from . import forms, models
 from statistics import variance
 import random
@@ -32,7 +34,7 @@ def toggle_matching(request):
     # Get POST request
     if request.method == 'POST':
         if not request.user.is_authenticated:
-            return JsonResponse({'message':"Unauthenticated request sender.", 'switch_state':toggle})
+            return JsonResponse({'message': "Unauthenticated request sender.", 'switch_state': toggle})
         toggle = request.POST.get('switchValue')
 
         # Toggle preferences
@@ -41,7 +43,7 @@ def toggle_matching(request):
         prefs.save()
 
         # Send response
-        return JsonResponse({'message':"Matching preference toggled succesfully.", 'switch_state':toggle})
+        return JsonResponse({'message': "Matching preference toggled succesfully.", 'switch_state': toggle})
     return redirect('home')
 
 
@@ -91,34 +93,34 @@ class GiveDetailsView(FormView):
         # Get response values
         agreeableness = (
             6 - int(form.cleaned_data.get('q2')),
-                    6 - int(form.cleaned_data.get('q6')),
-                    int(form.cleaned_data.get('q8')),
-                    int(form.cleaned_data.get('q12')),
-                    6 - int(form.cleaned_data.get('q14')),
-                    6 - int(form.cleaned_data.get('q18')),
-                    int(form.cleaned_data.get('q20')),
-                    int(form.cleaned_data.get('q23')),
-                    int(form.cleaned_data.get('q25')),
+            6 - int(form.cleaned_data.get('q6')),
+            int(form.cleaned_data.get('q8')),
+            int(form.cleaned_data.get('q12')),
+            6 - int(form.cleaned_data.get('q14')),
+            6 - int(form.cleaned_data.get('q18')),
+            int(form.cleaned_data.get('q20')),
+            int(form.cleaned_data.get('q23')),
+            int(form.cleaned_data.get('q25')),
         )
         neuroticism = (
             6 - int(form.cleaned_data.get('q3')),
-                    int(form.cleaned_data.get('q4')),
-                    int(form.cleaned_data.get('q9')),
-                    6 - int(form.cleaned_data.get('q10')),
-                    6 - int(form.cleaned_data.get('q15')),
-                    int(form.cleaned_data.get('q16')),
-                    int(form.cleaned_data.get('q21')),
-                    int(form.cleaned_data.get('q22')),
+            int(form.cleaned_data.get('q4')),
+            int(form.cleaned_data.get('q9')),
+            6 - int(form.cleaned_data.get('q10')),
+            6 - int(form.cleaned_data.get('q15')),
+            int(form.cleaned_data.get('q16')),
+            int(form.cleaned_data.get('q21')),
+            int(form.cleaned_data.get('q22')),
         )
         extroversion = (
             int(form.cleaned_data.get('q1')),
-                    int(form.cleaned_data.get('q5')),
-                    6 - int(form.cleaned_data.get('q7')),
-                    6 - int(form.cleaned_data.get('q11')),
-                    int(form.cleaned_data.get('q13')),
-                    int(form.cleaned_data.get('q17')),
-                    int(form.cleaned_data.get('q19')),
-                    6 - int(form.cleaned_data.get('q24')),
+            int(form.cleaned_data.get('q5')),
+            6 - int(form.cleaned_data.get('q7')),
+            6 - int(form.cleaned_data.get('q11')),
+            int(form.cleaned_data.get('q13')),
+            int(form.cleaned_data.get('q17')),
+            int(form.cleaned_data.get('q19')),
+            6 - int(form.cleaned_data.get('q24')),
         )
 
         # Get details model
@@ -132,7 +134,7 @@ class GiveDetailsView(FormView):
         details.agreeableness = min((sum(agreeableness) / len(agreeableness) - 1) / 4, 0.999)
         details.neuroticism = min((sum(neuroticism) / len(neuroticism) - 1) / 4, 0.999)
         details.extroversion = min((sum(extroversion) / len(extroversion) - 1) / 4, 0.999)
-        details.heuristic = min(details.agreeableness * (1-details.neuroticism), 0.999)
+        details.heuristic = min(details.agreeableness * (1 - details.neuroticism), 0.999)
         details.save()
 
         # Set the details to the user
@@ -164,7 +166,7 @@ def matching(request):
         # - Sorts to also try and have the highest number of groups where possible.
         total = len(users)
         group_size = None
-        for i in range(settings.GROUP_SIZE_MIN, settings.GROUP_SIZE_MAX+1):
+        for i in range(settings.GROUP_SIZE_MIN, settings.GROUP_SIZE_MAX + 1):
             if not group_size or (group_size and total % group_size > total % i):
                 group_size = i
                 # Break if reached best possible option
@@ -192,11 +194,11 @@ def matching(request):
         # - Aims to produce different groups each time, for different experiences
         # - Often pairs with people from before, but not exact same groups
         for row in rows:
-            for i in range(len(row)-1):
+            for i in range(len(row) - 1):
                 if random.getrandbits(1):
                     tmp = row[i]
-                    row[i] = row[i+1]
-                    row[i+1] = tmp
+                    row[i] = row[i + 1]
+                    row[i + 1] = tmp
 
         # Generate groups
         groups = []
@@ -209,7 +211,7 @@ def matching(request):
                 group.append(user)
                 extroversions_sum += float(user.details.extroversion)
             groups.append(group)
-            average_extroversions.append((i, extroversions_sum/group_size))
+            average_extroversions.append((i, extroversions_sum / group_size))
 
         # Add on remainder if necessary
         if remainder > 0:
@@ -220,10 +222,14 @@ def matching(request):
         # Save the new matches to the model
         means = []
         variances = []
+        emails = []
         for group in groups:
-            # Calculate stats
+            # Calculate stats & emails
             values = [[], [], [], []]
+            email_recipients = []
             for member in group:
+                if member.preferences.notification_match:
+                    email_recipients.append(member.email)
                 values[0].append(member.details.agreeableness)
                 values[1].append(member.details.neuroticism)
                 values[2].append(member.details.extroversion)
@@ -241,6 +247,22 @@ def matching(request):
                 round(variance(values[3]), 3),
             ])
 
+            # Send emails
+            context = {
+                'count': len(group),
+                'url': settings.BASE_URL + reverse_lazy('matches'),
+            }
+            email_text = loader.get_template("email-match.txt").render(context=context)
+            email_html = loader.get_template("email-match.html").render(context=context)
+            email = mail.EmailMultiAlternatives(
+                "New Match - Play Games with New Friends!",
+                email_text,
+                settings.DEFAULT_FROM_EMAIL,
+                email_recipients,
+            )
+            email.attach_alternative(email_html, "text/html")
+            emails.append(email)
+
             # Don't save to model if in debug mode
             if settings.DEBUG:
                 continue
@@ -249,9 +271,10 @@ def matching(request):
             match = models.Match()
             match.save()
 
-            # Add members
+            # Add members and notify them
             for member in group:
                 match.details_list.add(member.details)
+
             match.save()
 
             # Add metadata
@@ -264,12 +287,14 @@ def matching(request):
             match.variance_extroversion = variances[-1][2]
             match.variance_heuristic = variances[-1][3]
             match.save()
+        connection = mail.get_connection()
+        connection.send_messages(emails)
 
         # Generate success message
         # - Include (anonymised) details on the matching
         message = f"<h2>Success!</h2><p>{groups_total} groups of size {group_size} with a remainder of {remainder}/{total} users.</p>"
         for i in range(groups_total):
-            message += f"<h3>Group #{i+1}.</h3><ul><p>"
+            message += f"<h3>Group #{i + 1}.</h3><ul><p>"
             details = ""
             for member in groups[i]:
                 message += f"{str(hash(str(member.id)))[:4]}, "  # Anonymises with cryptographic hash

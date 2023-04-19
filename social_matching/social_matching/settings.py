@@ -28,6 +28,11 @@ SECRET_KEY = 'django-insecure-)of&shp5old*$qbn1uy-jo3ob55ojeh7+@ztqjt@m9q4s&ngzq
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+if DEBUG:
+    BASE_URL = "http://127.0.0.1:8000"
+else:
+    BASE_URL = ""  # TODO: Add prod url
+
 ALLOWED_HOSTS = []
 
 # Variables
@@ -67,7 +72,7 @@ ROOT_URLCONF = 'social_matching.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],
+        'DIRS': [BASE_DIR / 'templates', BASE_DIR / 'templates/email'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -142,3 +147,21 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Redirect to root after loging in
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
+
+# Email config
+ADMINS = [("Jacob", "jp1808@york.ac.uk")]
+if DEBUG:
+    # Email addresses
+    DEFAULT_FROM_EMAIL = "no-reply@localhost"
+    SERVER_EMAIL = "error@localhost"
+    # Email settings
+    EMAIL_HOST = "localhost"
+    EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+    EMAIL_FILE_PATH = DATA_DIR / "email"
+else:
+    # Email addresses
+    # TODO: Add prod email addresses
+    # Email settings
+    # TODO: Add host, including user, password and port
+    # TODO: Add TLS/SSL if necessary
+    EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"

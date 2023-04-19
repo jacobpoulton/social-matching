@@ -10,5 +10,6 @@ urlpatterns = [
     path('accounts/details/', views.GiveDetailsView.as_view(), name='details'),
     path('accounts/remove/', views.delete_user, name='delete-user'),
     path('preferences/matching/', views.toggle_matching, name='toggle-matching'),
+    path('matches', RedirectView.as_view(url=''), name='matches'),  # TODO: Link to actual matches page
     path('admin/matching/', views.matching, name='matching'),
 ]

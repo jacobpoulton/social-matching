@@ -45,7 +45,7 @@ class User(AbstractUser):
     preferences = models.OneToOneField('UserPreferences', on_delete=models.PROTECT, null=True)
 
     def match_count(self) -> int:
-        return self.match_set.all().count()
+        return self.details.match_set.all().count()
 
     def is_matchable(self) -> bool:
         return (
