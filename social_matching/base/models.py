@@ -47,12 +47,23 @@ class User(AbstractUser):
     def match_count(self) -> int:
         return self.match_set.all().count()
 
+    def is_matchable(self) -> bool:
+        return (
+            not self.is_staff
+            and not self.is_superuser
+            and self.preferences.in_match_pool
+        )
+
     @classmethod
     def can_match(cls) -> bool:
-         # Conditions necessary for matching
+        # Conditions necessary for matching
         return (
-            cls.objects.all().count() > settings.GROUP_SIZE_MIN
+            len(cls.matchable_users()) > settings.GROUP_SIZE_MIN
         )
+
+    @classmethod
+    def matchable_users(cls) -> models.QuerySet:
+        return cls.objects.filter(is_staff=False, is_superuser=False, preferences__in_match_pool=True)
 
 
 # User details class.
@@ -62,6 +73,9 @@ class UserDetails(models.Model):
     agreeableness = models.DecimalField(max_digits=3, decimal_places=3, default=0.5)
     neuroticism = models.DecimalField(max_digits=3, decimal_places=3, default=0.5)
     extroversion = models.DecimalField(max_digits=3, decimal_places=3, default=0.5)
+
+    # Heuristic used in matching (agreeableness * 1-neuroticism)
+    heuristic = models.DecimalField(max_digits=3, decimal_places=3, default=0.5)
 
 
 # User preferences class.
@@ -84,4 +98,15 @@ class SurveyData(models.Model):
 # Groups together details of users matched, as well as data relating to the match.
 # All users are non-identifiable.
 class Match(models.Model):
-    users = models.ManyToManyField('User')
+    details_list = models.ManyToManyField('UserDetails')
+
+    # Metadata regarding the matches
+    mean_agreeableness = models.DecimalField(max_digits=3, decimal_places=3, default=0.5)
+    mean_neuroticism = models.DecimalField(max_digits=3, decimal_places=3, default=0.5)
+    mean_extroversion = models.DecimalField(max_digits=3, decimal_places=3, default=0.5)
+    mean_heuristic = models.DecimalField(max_digits=3, decimal_places=3, default=0.5)
+
+    variance_agreeableness = models.DecimalField(max_digits=3, decimal_places=3, default=0.5)
+    variance_neuroticism = models.DecimalField(max_digits=3, decimal_places=3, default=0.5)
+    variance_extroversion = models.DecimalField(max_digits=3, decimal_places=3, default=0.5)
+    variance_heuristic = models.DecimalField(max_digits=3, decimal_places=3, default=0.5)
