@@ -66,12 +66,19 @@ class CreateUserView(CreateView):
     success_url = reverse_lazy('details')
 
     def form_valid(self, form):
+        # Get consent
+        form.cleaned_data['consent_information_sheet'] = form.data['consent_information_sheet'] == 'on'
+        form.cleaned_data['consent_participation'] = form.data['consent_participation'] == 'on'
+        form.cleaned_data['consent_publication'] = form.data['consent_publication'] == 'on'
+
         # Log the new user in
         redirect_url = super().form_valid(form)
         user = authenticate(self.request,
                             username=form.cleaned_data.get('email'),
                             password=form.cleaned_data.get('password2'))
         login(self.request, user)
+
+        print(user.consent_information_sheet, form.data, form.cleaned_data)
 
         # Add new preferences object to the user
         prefs = models.UserPreferences()

@@ -6,6 +6,18 @@ h1 {
     -webkit-text-fill-color: transparent;
 }
 
+p, li, small {
+    color: #fffd;
+}
+
+a {
+    color: var(--orange_1);
+}
+
+a:hover {
+    color: var(--orange_2);
+}
+
 .btn {
     background: inherit;
     background-size: 200%;

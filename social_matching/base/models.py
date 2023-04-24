@@ -40,6 +40,12 @@ class User(AbstractUser):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
+    # Consent
+    # - All required to be true
+    consent_information_sheet = models.BooleanField()
+    consent_participation = models.BooleanField()
+    consent_publication = models.BooleanField()
+
     # Relations to other user data
     details = models.OneToOneField('UserDetails', on_delete=models.PROTECT, null=True)
     preferences = models.OneToOneField('UserPreferences', on_delete=models.PROTECT, null=True)

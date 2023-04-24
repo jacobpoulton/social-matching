@@ -7,7 +7,14 @@ from django.contrib.auth import get_user_model
 class CustomUserCreationForm(UserCreationForm):
     class Meta:
         model = get_user_model()
-        fields = ("email", "password1", "password2")
+        fields = (
+            "email",
+            "password1",
+            "password2",
+            "consent_information_sheet",
+            "consent_participation",
+            "consent_publication"
+        )
 
 
 class ModifiedBigFiveInventory(forms.Form):

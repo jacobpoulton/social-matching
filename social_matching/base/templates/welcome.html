@@ -7,7 +7,10 @@
 
 {% block content %}
     <h1>Welcome!</h1>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus quis ante ipsum. Cras a nibh cursus, imperdiet tellus sed, luctus justo. Curabitur sapien justo, sagittis sed ex sed, placerat convallis.</p>
+    <h4>Unnamed Social Matching Project</h4>
+    <br>
+    <p class="mb-4">Join this project and get matched with other people to make new friends!</p>
+    <small><i><a href="#">About This Project</a>  /  <a href="{% static 'Participant_Information_Sheet.pdf' %}" target="_blank">Participant Information Sheet</a></i></small>
     <hr>
     <div class="buttons">
         <a class="btn btn-primary" href="{% url 'create-user' %}" role="button" style="min-width: 10rem;">Sign Up</a>

@@ -66,14 +66,28 @@
 
 /* Text Highlighting */
 ::selection {
-    background: #ffffff22;
+    background: #fff3;
 }
 ::-moz-selection {
-    background: #ffffff22;
+    background: #fff3;
+}
+input::selection {
+    background: #0003;
+}
+input::-moz-selection {
+    background: #0003;
 }
 
 
 /* Bootstrap Overrides */
+
+a {
+    color: var(--purple_4);
+}
+
+a:hover {
+    color: var(--purple_3);
+}
 
 .form-control {
     font-size: var(--text-scaling);
@@ -100,13 +114,23 @@ fieldset {
 }
 
 .form-check-input:checked {
+    background-color: var(--green_2);
+    border-color: var(--green_3);
+}
+
+.form-check-input[role='switch']:checked {
     background-color: var(--orange_2);
     border-color: var(--orange_3);
 }
 
 .form-check-input:focus {
-    border-color: var(--orange_3);
+    border-color: var(--green_3);
     outline: 0;
+    box-shadow: 0 0 0 0.25rem var(--green_3);
+}
+
+.form-check-input[role='switch']:focus {
+    border-color: var(--orange_3);
     box-shadow: 0 0 0 0.25rem var(--orange_3);
 }
 
