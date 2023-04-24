@@ -25,6 +25,8 @@ def home(request):
     context = {  # TODO: Add functionality to contexts
         'matches': request.user.match_count(),
         'match_again': request.user.preferences.in_match_pool,
+        'email_match': request.user.preferences.notification_match,
+        'email_survey': request.user.preferences.notification_survey,
         'survey_open': True,
     }
     return render(request, 'home.html', context=context)
@@ -44,6 +46,17 @@ def toggle_matching(request):
 
         # Send response
         return JsonResponse({'message': "Matching preference toggled succesfully.", 'switch_state': toggle})
+    return redirect('home')
+
+
+def preferences_update(request):
+    # Update user prefs if possible
+    if request.POST and request.user.is_authenticated and request.user.preferences:
+        request.user.preferences.notification_match = 'notification_match' in request.POST.keys()
+        request.user.preferences.notification_survey = 'notification_survey' in request.POST.keys()
+        request.user.preferences.save()
+
+    # Redirect to home regardless
     return redirect('home')
 
 
