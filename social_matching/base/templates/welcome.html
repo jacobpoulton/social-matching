@@ -7,11 +7,15 @@
 
 {% block content %}
     <h1>Welcome!</h1>
-    <h4>Unnamed Social Matching Project</h4>
+    <h4 class="fw-light">Unnamed Social Matching Project</h4>
     <br>
-    <p class="mb-4">Join this project and get matched with other people to make new friends!</p>
-    <small><i><a href="#">About This Project</a>  /  <a href="{% static 'Participant_Information_Sheet.pdf' %}" target="_blank">Participant Information Sheet</a></i></small>
-    <hr>
+    <div class="card bg-dark mb-4">
+        <div class="card-body">
+            <p class="mb-4">Join this project and get matched with other people to make new friends!</p>
+            <small><i><a href="{% url 'about' %}">About This Project</a>  /  <a href="{% static 'Participant_Information_Sheet.pdf' %}" target="_blank">Participant Information Sheet</a></i></small>
+        </div>
+    </div>
+    <br>
     <div class="buttons">
         <a class="btn btn-primary" href="{% url 'create-user' %}" role="button" style="min-width: 10rem;">Sign Up</a>
         <a class="btn btn-primary" href="{% url 'login' %}" role="button" style="min-width: 10rem; background-position-x: 100%">Log In</a>

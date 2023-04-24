@@ -6,8 +6,8 @@ h1 {
     -webkit-text-fill-color: transparent;
 }
 
-p, li, small {
-    color: #fffd;
+p, li, ol {
+    color: var(--pink_1);
 }
 
 a {
@@ -21,6 +21,47 @@ a:hover {
 .btn {
     background: inherit;
     background-size: 200%;
+}
+
+.bg-dark {
+    --bs-bg-opacity: 0.05;
+}
+
+.card, .accordion {
+    box-shadow: 0px 10px 20px 0px #fff2;
+    border-color: #fff1;
+}
+
+.accordion-item {
+    border-color: #fff1;
+    width: 65rem;
+    max-width: 80vw;
+}
+
+.accordion-button {
+    color: white;
+}
+
+.accordion-button:not(.collapsed) {
+    color: var(--orange_1);
+}
+
+.accordion-button::after {
+    background-image: url("caret-down.svg");
+}
+
+.accordion-button:not(.collapsed)::after {
+    background-image: url("caret-down-yellow.svg");
+}
+
+.accordion-button:focus {
+    box-shadow: 0 0 0 0.25rem #ffe09122;
+}
+
+ol {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 }
 
 /* Landscape */

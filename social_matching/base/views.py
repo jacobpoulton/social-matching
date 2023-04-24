@@ -32,6 +32,10 @@ def home(request):
     return render(request, 'home.html', context=context)
 
 
+def about(request):
+    return render(request, 'about.html')
+
+
 def toggle_matching(request):
     # Get POST request
     if request.method == 'POST':
