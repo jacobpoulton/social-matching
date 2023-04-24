@@ -47,18 +47,30 @@
                     <form method="post" action="{% url 'set-preferences'  %}">
                         {% csrf_token %}
                         <div class="modal-body">
-                            <div class="form-check form-switch">
-                                <input class="form-check-input" style="height: 1.5rem; width: 2.5rem;" type="checkbox" role="switch" name="notification_match" id="id_notification_match" {% if email_match %} checked {% endif %}>
+                            <div class="form-check form-switch d-flex justify-content-start align-items-center">
+                                <input class="form-check-input" type="checkbox" role="switch" name="notification_match" id="id_notification_match" {% if email_match %} checked {% endif %}>
                                 <label class="form-check-label" for="notificationMatch">Email: New Match</label>
                             </div>
-                            <div class="form-check form-switch">
-                                <input class="form-check-input" style="height: 1.5rem; width: 2.5rem;" type="checkbox" role="switch" name="notification_survey" id="id_notification_survey" {% if email_survey %} checked {% endif %}>
+                            <div class="form-text">Recieve email notification of new matches.</div>
+                            <div class="form-check form-switch d-flex justify-content-start align-items-center">
+                                <input class="form-check-input" type="checkbox" role="switch" name="notification_survey" id="id_notification_survey" {% if email_survey %} checked {% endif %}>
                                 <label class="form-check-label" for="notificationSurvey">Email: Project Survey</label>
                             </div>
+                            <div class="form-text">Recieve email notification when the project survey is released.</div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
                             <button type="submit" class="btn btn-success" value="set-preferences">Submit</button>
+                            <br>
+                            <button class="btn btn-danger fs-4" style="text-decoration: underline; text-transform: uppercase; font-weight: 300;" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDeleteAccount" aria-expanded="false" aria-controls="collapseDeleteAccount">
+                                Delete Account
+                            </button>
+                            <br>
+                            <div class="collapse" id="collapseDeleteAccount">
+                                <hr>
+                                <p class="fs-4">Deleting your account will withdraw all associated data with it from the study. To re-join you will need to create a new account from scratch. If you agree with this, please proceed to press delete below.</p>
+                                <a class="btn btn-secondary fs-3" href="{% url 'delete-user' %}">Delete</a>
+                            </div>
                         </div>
                     </form>
                 </div>
