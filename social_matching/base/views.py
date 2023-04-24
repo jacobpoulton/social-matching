@@ -28,6 +28,7 @@ def home(request):
         'match_again': request.user.preferences.in_match_pool,
         'email_match': request.user.preferences.notification_match,
         'email_survey': request.user.preferences.notification_survey,
+        'contact': request.user.contact,
         'survey_open': True,
     }
     return render(request, 'home.html', context=context)
@@ -60,6 +61,8 @@ def preferences_update(request):
         request.user.preferences.notification_match = 'notification_match' in request.POST.keys()
         request.user.preferences.notification_survey = 'notification_survey' in request.POST.keys()
         request.user.preferences.save()
+        request.user.contact = request.POST.get('contact')
+        request.user.save()
 
     # Redirect to home regardless
     return redirect('home')
@@ -182,6 +185,7 @@ class ViewMatches(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['object_list'] = context['object_list'].filter(details_list=self.request.user.details)
+        context['user'] = self.request.user
         return context
 
 

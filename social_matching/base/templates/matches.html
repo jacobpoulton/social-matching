@@ -19,7 +19,9 @@
                     <div class="accordion-body">
                         <ul class="text-start mx-4 my-2">
                             {% for details in match.details_list.all %}
-                                <li class="my-2">{{details.user.email}}</li>
+                                {% if user.email != details.user.email %}
+                                    <li class="my-2">{{details.user.contact}}</li>
+                                {% endif %}
                             {% endfor %}
                         </ul>    
                     </div>

@@ -11,6 +11,7 @@ class CustomUserCreationForm(UserCreationForm):
             "email",
             "password1",
             "password2",
+            "contact",
             "consent_information_sheet",
             "consent_participation",
             "consent_publication"

@@ -40,6 +40,9 @@ class User(AbstractUser):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
+    # Contact
+    contact = models.TextField(max_length=128, null=True)
+
     # Consent
     # - All required to be true
     consent_information_sheet = models.BooleanField()

@@ -7,7 +7,8 @@
 
 {% block content %}
     <h1>Home Page</h1>
-    <p style="color:var(--pink_1);">You may change any details pertaining to matching below in 'User Details'. You can set email notification preferences, as well as delete your account below in 'Preferences'.</p>
+    <p class="fw-light" style="color:var(--pink_1);">You may change any details pertaining to matching below in <span style="color:white;">'User Details'</span>.</p>
+    <p class="fw-light" style="color:var(--pink_1);">You can set email <span class="fw-normal">notification preferences</span>, <span class="fw-normal">your contact info</span>, as well as <span class="fw-normal">delete your account</span> below in <span style="color:white;">'Preferences'</span>.</p>
     <hr>
     {% if survey_open %}
         <a class="btn btn-success btn-big" href="#" role="button">Take Survey</a>
@@ -27,7 +28,6 @@
                 <input class="form-check-input" style="width: 3.5rem; scale: 0.8;" type="checkbox" role="switch" id="matchAgainCheck" {% if match_again %}checked{% endif %}>
                 <label class="form-check-label" for="matchAgainCheck">Recieve More Matches</label>
             </div>
-
         </form>
     {% endif %}
     <hr>
@@ -57,6 +57,12 @@
                                 <label class="form-check-label" for="notificationSurvey">Email: Project Survey</label>
                             </div>
                             <div class="form-text">Recieve email notification when the project survey is released.</div>
+                            <hr>
+                            <div class="text-start mb-3">
+                                <label for="id_contact" class="form-label">Contact Info:</label>
+                                <textarea class="form-control w-100" name="contact" id="id_contact" rows="2">{{contact}}</textarea>
+                            </div>
+                            <div class="form-text">Shown to people you are matched with.</div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>

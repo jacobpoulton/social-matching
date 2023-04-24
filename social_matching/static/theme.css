@@ -118,7 +118,7 @@ fieldset {
     border-color: var(--green_3);
 }
 
-.form-check-input[role='switch']:checked {
+.form-check-input[role='switch']:checked, .form-check-input[type='radio']:checked {
     background-color: var(--orange_2);
     border-color: var(--orange_3);
 }
@@ -129,7 +129,7 @@ fieldset {
     box-shadow: 0 0 0 0.25rem var(--green_3);
 }
 
-.form-check-input[role='switch']:focus {
+.form-check-input[role='switch']:focus, .form-check-input[type='radio']:focus {
     border-color: var(--orange_3);
     box-shadow: 0 0 0 0.25rem var(--orange_3);
 }
