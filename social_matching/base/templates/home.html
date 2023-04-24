@@ -7,7 +7,7 @@
 
 {% block content %}
     <h1>Home Page</h1>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sed euismod nulla. Vivamus sem turpis, convallis vitae gravida eu, dignissim vel sem. Proin luctus vehicula nibh nec maximus. Phasellus et vulputate augue. Phasellus blandit nunc sed tristique lacinia. Praesent non felis risus. Donec eleifend malesuada rhoncus. Donec viverra tortor a lorem dictum volutpat. Nam ac nisl malesuada, efficitur erat sed, tristique mi. Duis vel tortor mi. Curabitur vitae dui elementum, dignissim ipsum sit amet, molestie justo. Nunc commodo ipsum lectus.</p>
+    <p style="color:var(--pink_1);">You may change any details pertaining to matching below in 'User Details'. You can set email notification preferences, as well as delete your account below in 'Preferences'.</p>
     <hr>
     {% if survey_open %}
         <a class="btn btn-success btn-big" href="#" role="button">Take Survey</a>
@@ -16,11 +16,11 @@
     {% endif %}
     <h3>Matching</h3>
     {% if matches == 0 %}
-        <p>Matches have not yet been made, we are waiting on more users. We will notify you via email as soon as your match is made!</p>
-        <small>If you do not wish to recieve email notification this may be changed in preferences.</small>
+        <p>Matches have not yet been made, we are waiting on more users. {% if email_match %}We will notify you via email as soon as your match is made!{% endif %}</p>
+        <small>You may toggle email notifications for this in preferences.</small>
     {% else %}
         <form>
-            <a class="btn btn-primary" href="#" role="button" style="--desktop-width: 13rem; background-position-x: 100%">
+            <a class="btn btn-primary" href="{% url 'matches' %}" role="button" style="--desktop-width: 13rem; background-position-x: 100%">
                 View Match{% if matches > 1 %}s{% endif %}
             </a>
             <div class="form-check form-switch d-flex justify-content-center align-items-end my-1">

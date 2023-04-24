@@ -1,0 +1,31 @@
+{% extends "root.html" %}
+
+{% block header %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'welcome.css' %}">
+{% endblock %}
+
+{% block content %}
+    <h1>Matches</h1>
+    <div class="accordion mb-4" id="matchesAccordion">
+        {% for match in object_list %}
+            <div class="accordion-item bg-dark">
+                <h2 class="accordion-header mt-0">
+                    <button class="accordion-button bg-dark {% if match != object_list|first %}collapsed{% endif %}" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{match.id}}" aria-expanded="true" aria-controls="collapse{{match.id}}">
+                        <h4>{{ match.origin_date }}</h4>
+                    </button>
+                </h2>
+                <div id="collapse{{match.id}}" class="accordion-collapse collapse {% if match == object_list|first %}show{% endif %}" data-bs-parent="#matchesAccordion">
+                    <div class="accordion-body">
+                        <ul class="text-start mx-4 my-2">
+                            {% for details in match.details_list.all %}
+                                <li class="my-2">{{details.user.email}}</li>
+                            {% endfor %}
+                        </ul>    
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="buttons"><a class="btn btn-primary" href="{% url 'home' %}" role="button" style="min-width: 10rem;">Go Back</a></div>
+{% endblock %}

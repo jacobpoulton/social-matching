@@ -107,6 +107,8 @@ class Match(models.Model):
     details_list = models.ManyToManyField('UserDetails')
 
     # Metadata regarding the matches
+    origin_date = models.DateField(auto_now=True)
+
     mean_agreeableness = models.DecimalField(max_digits=3, decimal_places=3, default=0.5)
     mean_neuroticism = models.DecimalField(max_digits=3, decimal_places=3, default=0.5)
     mean_extroversion = models.DecimalField(max_digits=3, decimal_places=3, default=0.5)

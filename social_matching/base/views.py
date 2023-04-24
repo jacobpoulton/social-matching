@@ -1,6 +1,7 @@
 from django.contrib.auth import authenticate, login
 from django.contrib.admin.views import decorators
 from django.views.generic.edit import CreateView, FormView
+from django.views.generic.list import ListView
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.http import JsonResponse
@@ -172,6 +173,16 @@ class GiveDetailsView(FormView):
 
         # Return user
         return redirect_url
+
+
+class ViewMatches(ListView):
+    model = models.Match
+    template_name = "matches.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['object_list'] = context['object_list'].filter(details_list=self.request.user.details)
+        return context
 
 
 @decorators.staff_member_required()
