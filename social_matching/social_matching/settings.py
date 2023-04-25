@@ -28,12 +28,22 @@ SECRET_KEY = os.environ['SECRET_KEY']
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ['DEBUG'] == "1"
 
+# Security settings
+if not DEBUG:
+    CSRF_COOKIE_SECURE = True
+    SESSION_COOKIE_SECURE = True
+    SECURE_SSL_REDIRECT = True
+    SECURE_HSTS_SECONDS = int(os.environ['SECURE_HSTS_SECONDS'])
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
+
+# Host urls
 if DEBUG:
     BASE_URL = "http://127.0.0.1:8000"
+    ALLOWED_HOSTS = []
 else:
-    BASE_URL = os.environ['SITE_HOST']
-
-ALLOWED_HOSTS = []
+    BASE_URL = "https://" + os.environ['SITE_HOST'] + "/"
+    ALLOWED_HOSTS = ["." + os.environ['SITE_HOST']]
 
 # Variables
 GROUP_SIZE_MIN = int(os.environ['MATCH_SIZE_MIN'])
@@ -137,7 +147,6 @@ USE_TZ = True
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     BASE_DIR / "static",
-    '/var/www/static/',
 ]
 
 # Default primary key field type
