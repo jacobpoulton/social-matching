@@ -23,7 +23,7 @@ def home(request):
         return redirect('details')
 
     # Show main home page to full users
-    context = {  # TODO: Add functionality to contexts
+    context = {
         'matches': request.user.match_count(),
         'match_again': request.user.preferences.in_match_pool,
         'email_match': request.user.preferences.notification_match,

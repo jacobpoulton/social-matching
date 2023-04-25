@@ -23,21 +23,21 @@ if not os.path.exists(DATA_DIR):
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-)of&shp5old*$qbn1uy-jo3ob55ojeh7+@ztqjt@m9q4s&ngzq'
+SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ['DEBUG'] == "1"
 
 if DEBUG:
     BASE_URL = "http://127.0.0.1:8000"
 else:
-    BASE_URL = ""  # TODO: Add prod url
+    BASE_URL = os.environ['SITE_HOST']
 
 ALLOWED_HOSTS = []
 
 # Variables
-GROUP_SIZE_MIN = 4
-GROUP_SIZE_MAX = 7
+GROUP_SIZE_MIN = int(os.environ['MATCH_SIZE_MIN'])
+GROUP_SIZE_MAX = int(os.environ['MATCH_SIZE_MAX'])
 
 
 # Application definition
@@ -160,8 +160,12 @@ if DEBUG:
     EMAIL_FILE_PATH = DATA_DIR / "email"
 else:
     # Email addresses
-    # TODO: Add prod email addresses
+    DEFAULT_FROM_EMAIL = os.environ['EMAIL_HOST_USER']
+    SERVER_EMAIL = os.environ['EMAIL_HOST_USER']
     # Email settings
-    # TODO: Add host, including user, password and port
-    # TODO: Add TLS/SSL if necessary
+    EMAIL_HOST = os.environ['EMAIL_HOST']
+    EMAIL_HOST_USER = os.environ['EMAIL_HOST_USER']
+    EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD']
+    EMAIL_PORT = int(os.environ['EMAIL_HOST_PORT'])
+    EMAIL_USE_SSL = True
     EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"

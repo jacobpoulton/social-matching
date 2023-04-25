@@ -12,6 +12,6 @@ urlpatterns = [
     path('accounts/remove/', views.delete_user, name='delete-user'),
     path('preferences/matching/', views.toggle_matching, name='toggle-matching'),
     path('preferences/update/', views.preferences_update, name='set-preferences'),
-    path('matches', views.ViewMatches.as_view(), name='matches'),  # TODO: Link to actual matches page
+    path('matches', views.ViewMatches.as_view(), name='matches'),
     path('admin/matching/', views.matching, name='matching'),
 ]
