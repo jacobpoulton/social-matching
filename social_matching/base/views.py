@@ -29,7 +29,7 @@ def home(request):
         'email_match': request.user.preferences.notification_match,
         'email_survey': request.user.preferences.notification_survey,
         'contact': request.user.contact,
-        'survey_open': True,
+        'survey_open': settings.SURVEY_OPEN,
     }
     return render(request, 'home.html', context=context)
 

@@ -17,8 +17,12 @@
     {% endif %}
     <h3>Matching</h3>
     {% if matches == 0 %}
-        <p>Matches have not yet been made, we are waiting on more users. {% if email_match %}We will notify you via email as soon as your match is made!{% endif %}</p>
-        <small>You may toggle email notifications for this in preferences.</small>
+        <div class="card bg-dark mb-4" style="--bs-bg-opacity: 0.05;">
+            <div class="card-body">
+                <p>Matches have not yet been made, we are waiting on more users. {% if email_match %}We will notify you via email as soon as your match is made!{% endif %}</p>
+                <small>You may toggle email notifications for this in preferences.</small>
+            </div>
+        </div>
     {% else %}
         <form>
             <a class="btn btn-primary" href="{% url 'matches' %}" role="button" style="--desktop-width: 13rem; background-position-x: 100%">

@@ -38,6 +38,7 @@ ALLOWED_HOSTS = []
 # Variables
 GROUP_SIZE_MIN = int(os.environ['MATCH_SIZE_MIN'])
 GROUP_SIZE_MAX = int(os.environ['MATCH_SIZE_MAX'])
+SURVEY_OPEN = os.environ['SURVEY_OPEN'] == "1"
 
 
 # Application definition
