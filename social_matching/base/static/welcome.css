@@ -1,0 +1,72 @@
+h1 {
+    font-weight: 800;
+    font-size: calc(4*var(--text-scaling));
+    background: -webkit-linear-gradient(135deg, var(--purple_1) -20%, var(--pink_1) 50%, var(--red_1) 120%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+p, li, ol {
+    color: var(--pink_1);
+}
+
+a {
+    color: var(--orange_1);
+}
+
+a:hover {
+    color: var(--orange_2);
+}
+
+.btn {
+    background: inherit;
+    background-size: 200%;
+}
+
+.bg-dark {
+    --bs-bg-opacity: 0.05;
+}
+
+.accordion {
+    box-shadow: 0px 10px 20px 0px #fff2;
+    border-color: #fff1;
+}
+
+.accordion-item {
+    border-color: #fff1;
+    width: 65rem;
+    max-width: 80vw;
+}
+
+.accordion-button {
+    color: white;
+}
+
+.accordion-button:not(.collapsed) {
+    color: var(--orange_1);
+}
+
+.accordion-button::after {
+    background-image: url("caret-down.svg");
+}
+
+.accordion-button:not(.collapsed)::after {
+    background-image: url("caret-down-yellow.svg");
+}
+
+.accordion-button:focus {
+    box-shadow: 0 0 0 0.25rem #ffe09122;
+}
+
+ol {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+/* Landscape */
+@media (min-aspect-ratio: 7/10) {
+    h1 {
+        font-size: calc(6*var(--text-scaling));
+    }
+}

@@ -1,0 +1,57 @@
+{% extends "root.html" %}
+
+{% block header %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'welcome.css' %}">
+{% endblock %}
+
+{% block content %}
+    <h1>About</h1>
+    <p>Information about the project!</p>
+    <div class="accordion mb-4" id="infoAccordion">
+        <div class="accordion-item bg-dark">
+            <h2 class="accordion-header mt-0">
+                <button class="accordion-button bg-dark" type="button" data-bs-toggle="collapse" data-bs-target="#collapseHow" aria-expanded="true" aria-controls="collapseHow">
+                    <h4>How does it work?</h4>
+                </button>
+            </h2>
+            <div id="collapseHow" class="accordion-collapse collapse show" data-bs-parent="#infoAccordion">
+                <div class="accordion-body">
+                    <ol class="text-start mx-4 my-2">
+                        <li class="my-2">You fill out a short personality form.</li>
+                        <li class="my-2">We'll match you with other people based on your personality.</li>
+                        <li class="my-2">You play a game(s) of Among Us with your new group members.</li>
+                        <li class="my-2">Hopefully you can make new friendships, or at least have a good time!</li>
+                    </ol>    
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item bg-dark">
+            <h2 class="accordion-header mt-0">
+                <button class="accordion-button bg-dark collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAim" aria-expanded="false" aria-controls="collapseAim">
+                    <h4>What is the aim?</h4>
+                </button>
+            </h2>
+            <div id="collapseAim" class="accordion-collapse collapse" data-bs-parent="#infoAccordion">
+                <div class="accordion-body">
+                    <p>The purpose of this study is to investigate matching people together to play games, and reduce their social isolation. In particular, we're looking at the affect of a game which is 'casual', 'approachable' and ' easily available', such as the chosen game for this study, Among Us.</p>    
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item bg-dark">
+            <h2 class="accordion-header mt-0">
+                <button class="accordion-button bg-dark collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAmongUs" aria-expanded="false" aria-controls="collapseAmongUs">
+                    <h4>Among Us</h4>
+                </button>
+            </h2>
+            <div id="collapseAmongUs" class="accordion-collapse collapse" data-bs-parent="#infoAccordion">
+                <div class="accordion-body">
+                    <p>Among Us is a social deduction game. Each round a few randomly chosen players try to sabotage everyone else, who have to find the impostors' identities before it's too late.</p>
+                    <hr>
+                    <p>You can find the game <a href="https://www.innersloth.com/games/among-us/" target="_blank">here</a>!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="buttons"><a class="btn btn-primary" href="{% url 'home' %}" role="button" style="min-width: 10rem;">Go Back</a></div>
+{% endblock %}

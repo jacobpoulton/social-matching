@@ -1,0 +1,23 @@
+{% extends "root.html" %}
+
+{% block header %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'welcome.css' %}">
+{% endblock %}
+
+{% block content %}
+    <h1>Welcome!</h1>
+    <h2 class="fw-light fs-1">Unnamed Social Matching Project</h2>
+    <br>
+    <div class="card bg-dark mb-4">
+        <div class="card-body">
+            <p class="mb-4">Join this project and get matched with other people to make new friends!</p>
+            <small><i><a href="{% url 'about' %}">About This Project</a>  /  <a href="{% static 'Participant_Information_Sheet.pdf' %}" target="_blank">Participant Information Sheet</a></i></small>
+        </div>
+    </div>
+    <br>
+    <div class="buttons">
+        <a class="btn btn-primary" href="{% url 'create-user' %}" role="button" style="min-width: 10rem;">Sign Up</a>
+        <a class="btn btn-primary" href="{% url 'login' %}" role="button" style="min-width: 10rem; background-position-x: 100%">Log In</a>
+    </div>
+{% endblock %}

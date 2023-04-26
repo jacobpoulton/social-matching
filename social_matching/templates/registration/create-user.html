@@ -1,0 +1,53 @@
+{% extends "root.html" %}
+{% load bootstrap5 %}
+
+{% load static %}
+{% block content %}
+    <form method="post" action="{% url 'create-user' %}">
+        {% csrf_token %}
+        <div class="form-group">
+            <h2>Sign Up</h2>
+            {% bootstrap_field form.email show_label=False %}
+            {% bootstrap_field form.password1 show_label=False show_help=False bound_css_class='' %}
+            <div class="form-text text-muted d-flex justify-content-center text-start fs-5">
+                {{ form.password1.help_text }}
+            </div>
+            {% bootstrap_field form.password2 show_label=False show_help=False %}
+            <div class="form-text text-muted d-flex justify-content-center text-start fs-5 mb-5">
+                {{ form.password2.help_text }}
+            </div>
+            <div class="my-3">
+                <label class="form-label visually-hidden" for="id_contact">Contact</label>
+                <textarea name="contact" rows="2" maxlength="128" class="form-control" placeholder="Contact info" title="" required="" id="id_contact"></textarea>
+            </div>
+            <div class="form-text text-muted d-flex justify-content-center text-start fs-5">
+                Enter contact info for communicating with your matches.<br>Discord is recommended.
+            </div>
+            <hr>
+            <div class="container text-start">
+                <div class="form-check d-flex justify-content-start align-items-center mb-2">
+                    <input class="form-check-input" type="checkbox" name="consent_information_sheet" id="id_consent_information_sheet" required>
+                    <label class="form-check-label px-2" style="flex:1;" for="id_consent_information_sheet">
+                        I have read and understood the <a href="{% static 'Participant_Information_Sheet.pdf' %}" target="_blank">Participant Information Sheet</a>.
+                    </label>
+                </div>
+                <div class="form-check d-flex justify-content-start align-items-center mb-2">
+                    <input class="form-check-input" type="checkbox" name="consent_participation" id="id_consent_participation" required>
+                    <label class="form-check-label px-2" style="flex:1;" for="id_consent_participation">
+                        I agree to participate in this study.
+                    </label>
+                </div>
+                <div class="form-check d-flex justify-content-start align-items-center mb-2">
+                    <input class="form-check-input" type="checkbox" name="consent_publication" id="id_consent_publication" required>
+                    <label class="form-check-label px-2" style="flex:1;" for="id_consent_publication">
+                        I consent to the publication of anonymised data recorded during my participation.
+                    </label>
+                </div>
+            </div>
+            <hr>
+            <button type="submit" class="btn btn-success" value="create-user">Submit</button>
+        </div>
+        <input type="hidden" name="next" value="{{ next }}">
+        <a class="btn btn-danger" href="{% url 'home' %}">Go Back</a>
+    </form>
+{% endblock %}

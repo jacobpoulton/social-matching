@@ -11,21 +11,44 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+DATA_DIR = BASE_DIR / 'data'
+if not os.path.exists(DATA_DIR):
+    os.makedirs(DATA_DIR)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-)of&shp5old*$qbn1uy-jo3ob55ojeh7+@ztqjt@m9q4s&ngzq'
+SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ['DEBUG'] == "1"
 
-ALLOWED_HOSTS = []
+# Security settings
+if not DEBUG:
+    CSRF_COOKIE_SECURE = True
+    SESSION_COOKIE_SECURE = True
+    SECURE_SSL_REDIRECT = True
+    SECURE_HSTS_SECONDS = int(os.environ['SECURE_HSTS_SECONDS'])
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
+
+# Host urls
+if DEBUG:
+    BASE_URL = "http://127.0.0.1:8000"
+    ALLOWED_HOSTS = []
+else:
+    BASE_URL = "https://" + os.environ['SITE_HOST'] + "/"
+    ALLOWED_HOSTS = ["." + os.environ['SITE_HOST']]
+
+# Variables
+GROUP_SIZE_MIN = int(os.environ['MATCH_SIZE_MIN'])
+GROUP_SIZE_MAX = int(os.environ['MATCH_SIZE_MAX'])
+SURVEY_OPEN = os.environ['SURVEY_OPEN'] == "1"
 
 
 # Application definition
@@ -37,7 +60,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # 1st Party Apps
+    'base.apps.BaseConfig',
+    # 3rd Party Apps
+    'bootstrap5',
 ]
+
+AUTH_USER_MODEL = 'base.User'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -54,7 +83,7 @@ ROOT_URLCONF = 'social_matching.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates', BASE_DIR / 'templates/email'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -76,7 +105,7 @@ WSGI_APPLICATION = 'social_matching.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': DATA_DIR / 'db.sqlite3',
     }
 }
 
@@ -103,7 +132,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'en-gb'
 
 TIME_ZONE = 'UTC'
 
@@ -116,8 +145,37 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Redirect to root after loging in
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+
+# Email config
+ADMINS = [("Jacob", "jp1808@york.ac.uk")]
+if DEBUG:
+    # Email addresses
+    DEFAULT_FROM_EMAIL = "no-reply@localhost"
+    SERVER_EMAIL = "error@localhost"
+    # Email settings
+    EMAIL_HOST = "localhost"
+    EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+    EMAIL_FILE_PATH = DATA_DIR / "email"
+else:
+    # Email addresses
+    DEFAULT_FROM_EMAIL = os.environ['EMAIL_HOST_USER']
+    SERVER_EMAIL = os.environ['EMAIL_HOST_USER']
+    # Email settings
+    EMAIL_HOST = os.environ['EMAIL_HOST']
+    EMAIL_HOST_USER = os.environ['EMAIL_HOST_USER']
+    EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD']
+    EMAIL_PORT = int(os.environ['EMAIL_HOST_PORT'])
+    EMAIL_USE_SSL = True
+    EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"

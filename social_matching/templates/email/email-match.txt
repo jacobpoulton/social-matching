@@ -1,0 +1,3 @@
+New Match!
+You've been matched with {{count}} other users!
+Check it out at {{url}}

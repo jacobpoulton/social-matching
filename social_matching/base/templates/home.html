@@ -1,0 +1,108 @@
+{% extends "root.html" %}
+
+{% block header %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'home.css' %}">
+{% endblock %}
+
+{% block content %}
+    <h1>Home Page</h1>
+    <p class="fw-light" style="color:var(--pink_1);">You may change any details pertaining to matching below in <span style="color:white;">'User Details'</span>.</p>
+    <p class="fw-light" style="color:var(--pink_1);">You can set email <span class="fw-normal">notification preferences</span>, <span class="fw-normal">your contact info</span>, as well as <span class="fw-normal">delete your account</span> below in <span style="color:white;">'Preferences'</span>.</p>
+    <hr>
+    {% if survey_open %}
+        <a class="btn btn-success btn-big" href="#" role="button">Take Survey</a>
+        <p>Filling out this anonymised questionnaire is highly appreciated, every response has an impact on the research.</p>
+        <hr>
+    {% endif %}
+    <h2 class="fs-1">Matching</h2>
+    {% if matches == 0 %}
+        <div class="card bg-dark mb-4" style="--bs-bg-opacity: 0.05;">
+            <div class="card-body">
+                <p>Matches have not yet been made, we are waiting on more users. {% if email_match %}We will notify you via email as soon as your match is made!{% endif %}</p>
+                <small>You may toggle email notifications for this in preferences.</small>
+            </div>
+        </div>
+    {% else %}
+        <form>
+            <a class="btn btn-primary" href="{% url 'matches' %}" role="button" style="--desktop-width: 13rem; background-position-x: 100%">
+                View Match{% if matches > 1 %}s{% endif %}
+            </a>
+            <div class="form-check form-switch d-flex justify-content-center align-items-end my-1">
+                <input class="form-check-input" style="min-width: 3.5rem; scale: 0.8;" type="checkbox" role="switch" id="matchAgainCheck" {% if match_again %}checked{% endif %}>
+                <label class="form-check-label" for="matchAgainCheck">Recieve More Matches</label>
+            </div>
+        </form>
+    {% endif %}
+    <hr>
+    <div class="buttons">
+        <a class="btn btn-secondary" href="{% url 'details' %}" role="button" style="--desktop-width: 16rem;">User Details</a>
+        <button type="button" class="btn btn-secondary" style="--desktop-width: 16rem; background-position-x: 100%" data-bs-toggle="modal" data-bs-target="#preferencesUpdate">Preferences</button>
+    </div>
+    <a class="btn btn-danger" href="{% url 'logout' %}" role="button">Sign Out</a>
+    <div>
+        <div class="modal fade" id="preferencesUpdate" tabindex="-1" aria-labelledby="preferencesUpdateLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content bg-dark">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-1 mt-0" id="preferencesUpdateLabel">Preferences</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form method="post" action="{% url 'set-preferences'  %}">
+                        {% csrf_token %}
+                        <div class="modal-body">
+                            <div class="form-check form-switch d-flex justify-content-start align-items-center">
+                                <input class="form-check-input" type="checkbox" role="switch" name="notification_match" id="id_notification_match" {% if email_match %} checked {% endif %}>
+                                <label class="form-check-label" for="notificationMatch">Email: New Match</label>
+                            </div>
+                            <div class="form-text">Recieve email notification of new matches.</div>
+                            <div class="form-check form-switch d-flex justify-content-start align-items-center">
+                                <input class="form-check-input" type="checkbox" role="switch" name="notification_survey" id="id_notification_survey" {% if email_survey %} checked {% endif %}>
+                                <label class="form-check-label" for="notificationSurvey">Email: Project Survey</label>
+                            </div>
+                            <div class="form-text">Recieve email notification when the project survey is released.</div>
+                            <hr>
+                            <div class="text-start mb-3">
+                                <label for="id_contact" class="form-label">Contact Info:</label>
+                                <textarea class="form-control w-100" name="contact" id="id_contact" rows="2">{{contact}}</textarea>
+                            </div>
+                            <div class="form-text">Shown to people you are matched with.</div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-success" value="set-preferences">Submit</button>
+                            <br>
+                            <button class="btn btn-danger fs-4" style="text-decoration: underline; text-transform: uppercase; font-weight: 300;" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDeleteAccount" aria-expanded="false" aria-controls="collapseDeleteAccount">
+                                Delete Account
+                            </button>
+                            <br>
+                            <div class="collapse" id="collapseDeleteAccount">
+                                <hr>
+                                <p class="fs-4">Deleting your account will withdraw all associated data with it from the study. To re-join you will need to create a new account from scratch. If you agree with this, please proceed to press delete below.</p>
+                                <a class="btn btn-secondary fs-3" href="{% url 'delete-user' %}">Delete</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="https://cdn.jsdelivr.net/jquery.cookie/1.4.1/jquery.cookie.min.js"></script>
+    <script>
+        var csrftoken = $.cookie('csrftoken');
+        $('#matchAgainCheck').on('click', function(event) {
+            var state = $(this).is(':checked');
+            $.ajax({
+                type: "POST",
+                url: "{% url 'toggle-matching' %}",
+                data: {
+                    switchValue: state,
+                    csrfmiddlewaretoken: csrftoken
+                }
+            });
+        });
+    </script>
+{% endblock %}

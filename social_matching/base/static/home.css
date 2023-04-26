@@ -1,0 +1,23 @@
+.btn-big {
+    font-size: calc(1.7*var(--text-scaling));
+    font-weight: 800;
+    letter-spacing: 2px;
+    padding-inline: 20px;
+    border-radius: 1rem;
+}
+
+.buttons .btn {
+    width: max-content;
+}
+
+hr {
+    width: 46%;
+    margin-left: 27%;
+}
+
+/* Landscape */
+@media (min-aspect-ratio: 7/10) {
+    .buttons .btn {
+        width: var(--desktop-width);
+    }
+}
