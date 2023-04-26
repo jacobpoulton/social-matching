@@ -1,9 +1,15 @@
 /* Basic Tags */
 
+html {
+    background: var(--pink_3);
+    background: linear-gradient(135deg, var(--purple_2) 35%, var(--pink_3) 55%, var(--red_1) 110%);
+    background-size: 400%;
+    background-position: center;
+}
+
 body {
     margin: 0;
-    background: var(--pink_3);
-    background: linear-gradient(135deg, var(--purple_2) -10%, var(--pink_3) 50%, var(--red_1) 110%);
+    background: none;
     color: var(--light);
     font-size: var(--text-scaling);
     display: grid;

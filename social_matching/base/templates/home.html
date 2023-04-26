@@ -15,7 +15,7 @@
         <p>Filling out this anonymised questionnaire is highly appreciated, every response has an impact on the research.</p>
         <hr>
     {% endif %}
-    <h3>Matching</h3>
+    <h2 class="fs-1">Matching</h2>
     {% if matches == 0 %}
         <div class="card bg-dark mb-4" style="--bs-bg-opacity: 0.05;">
             <div class="card-body">
@@ -29,7 +29,7 @@
                 View Match{% if matches > 1 %}s{% endif %}
             </a>
             <div class="form-check form-switch d-flex justify-content-center align-items-end my-1">
-                <input class="form-check-input" style="width: 3.5rem; scale: 0.8;" type="checkbox" role="switch" id="matchAgainCheck" {% if match_again %}checked{% endif %}>
+                <input class="form-check-input" style="min-width: 3.5rem; scale: 0.8;" type="checkbox" role="switch" id="matchAgainCheck" {% if match_again %}checked{% endif %}>
                 <label class="form-check-label" for="matchAgainCheck">Recieve More Matches</label>
             </div>
         </form>
@@ -95,7 +95,6 @@
         var csrftoken = $.cookie('csrftoken');
         $('#matchAgainCheck').on('click', function(event) {
             var state = $(this).is(':checked');
-            console.log(state);
             $.ajax({
                 type: "POST",
                 url: "{% url 'toggle-matching' %}",
