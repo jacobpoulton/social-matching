@@ -8,8 +8,8 @@ body {
     font-size: var(--text-scaling);
     display: grid;
     justify-items: center;
-    align-items: center;
     grid-template-rows: auto max-content;
+    align-items: center;
 }
 
 h1 {
@@ -50,14 +50,34 @@ hr {
     text-align: center;
     margin-inline: calc(2*var(--page-pad));
     max-width: 85rem;
+    margin-top: calc(6rem - 4*var(--page-pad));
     margin-bottom: calc(2*var(--page-pad));
 }
 
 .footer {
     width: 100%;
     max-height: 25rem;
-    background: var(--navy_6);
+    padding: 0.5rem 2rem;
+    background: #41286666;
+    box-shadow: 0 20px 10px 20px var(--purple_5);
     align-self: end;
+}
+
+.footer-base {
+    font-weight: 600;
+    max-height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.footer-base a {
+    text-decoration: none;
+    color: white;
+}
+
+.footer-base img {
+    height: 6rem;
 }
 
 .buttons {

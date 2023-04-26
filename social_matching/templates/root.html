@@ -14,7 +14,13 @@
     </head>
     <body>
         <div class="content">{% block content %}{% endblock %}</div>
-        <div class="footer">{% block footer %}{% endblock %}</div>
+        <div class="footer">
+            <div>{% block footer %}{% endblock %}</div>
+            <div class="footer-base">
+                <a href="https://www.york.ac.uk/about/legal-statements/" target="_blank">Legal Statements</a>
+                <a href="https://york.ac.uk/" target="_blank"><img src="{% static 'UOY-Logo-Stacked-shield-White.svg' %}" alt="University of York"></a>
+            </div>
+        </div>
     </body>
     <script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
     {% bootstrap_javascript %}
