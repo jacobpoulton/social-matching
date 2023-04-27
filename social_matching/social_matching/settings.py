@@ -29,7 +29,7 @@ SECRET_KEY = os.environ['SECRET_KEY']
 DEBUG = os.environ['DEBUG'] == "1"
 
 # Security settings
-if not DEBUG:
+if os.environ['SECURE']:
     CSRF_COOKIE_SECURE = True
     SESSION_COOKIE_SECURE = True
     SECURE_SSL_REDIRECT = True
@@ -40,7 +40,7 @@ if not DEBUG:
 # Host urls
 if DEBUG:
     BASE_URL = "http://127.0.0.1:8000"
-    ALLOWED_HOSTS = []
+    ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
 else:
     BASE_URL = "https://" + os.environ['SITE_HOST'] + "/"
     ALLOWED_HOSTS = ["." + os.environ['SITE_HOST']]
@@ -76,6 +76,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'social_matching.urls'
@@ -102,12 +103,24 @@ WSGI_APPLICATION = 'social_matching.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': DATA_DIR / 'db.sqlite3',
+if DEBUG:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': DATA_DIR / 'db.sqlite3',
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': os.environ['DB_NAME'],
+            'USER': os.environ['DB_USER'],
+            'PASSWORD': os.environ['DB_PASSWORD'],
+            'HOST': os.environ['DB_HOST'],
+            'PORT': os.environ['DB_PORT'],
+        }
+    }
 
 
 # Password validation
@@ -144,7 +157,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR / "assets"
+STATIC_URL = "static/"
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
@@ -179,3 +193,31 @@ else:
     EMAIL_PORT = int(os.environ['EMAIL_HOST_PORT'])
     EMAIL_USE_SSL = True
     EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+
+# Logging
+LOG_FILE = os.environ["LOG_DIR"]
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "verbose": {
+            "format": "{levelname} {asctime} {module} {process:d} {thread:d} {message}",
+            "style": "{",
+        },
+    },
+    "handlers": {
+        "file": {
+            "level": "ERROR",
+            "class": "logging.FileHandler",
+            "filename": LOG_FILE,
+        },
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["file"],
+            "level": "ERROR",
+            "propagate": True,
+        },
+    },
+}

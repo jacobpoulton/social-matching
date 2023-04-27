@@ -1,2 +1,4 @@
 django == 4.1.7
 django-bootstrap-v5
+whitenoise
+mysqlclient
