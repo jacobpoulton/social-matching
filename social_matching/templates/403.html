@@ -1,0 +1,7 @@
+{% extends "root.html" %}
+
+{% block content %}
+    <h1>Forbidden</h1>
+    <p>You do not have access to this page, consider logging in.</p>
+    <a class="btn btn-primary" href="{% url 'login' %}">Log In</a><br>
+{% endblock %}
