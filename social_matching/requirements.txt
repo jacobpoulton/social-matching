@@ -1,0 +1,5 @@
+django
+django-bootstrap-v5
+whitenoise
+mysqlclient
+importlib-metadata
