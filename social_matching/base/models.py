@@ -9,22 +9,31 @@ from django.conf import settings
 class UserManager(BaseUserManager):
     use_in_migrations = True
 
-    def create_user(self, email, password=None):
+    def create_user(self, email, password=None, consent=False):
         # Require email
         if not email:
             raise ValueError("Users require an email address.")
 
-        # Create and save model
+        # Create user
         user = self.model(email=self.normalize_email(email))
         user.set_password(password)
+
+        # Apply consent if admin, otherwise wait until user consents manually
+        user.consent_information_sheet = consent
+        user.consent_participation = consent
+        user.consent_publication = consent
+
+        # Save and return
         user.save(using=self._db)
         return user
 
     def create_superuser(self, email, password):
-        # Create regular user and apply admin
-        user = self.create_user(email, password=password)
+        # Create regular user and set admin
+        user = self.create_user(email, password=password, consent=True)
         user.is_staff = True
         user.is_superuser = True
+
+        # Save and return
         user.save(using=self._db)
         return user
 
