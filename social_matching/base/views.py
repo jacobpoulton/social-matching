@@ -178,6 +178,12 @@ class GiveDetailsView(FormView):
         return redirect_url
 
 
+class SurveyView(FormView):
+    form_class = forms.SurveyForm
+    template_name = 'survey.html'
+    success_url = reverse_lazy('home')
+
+
 class ViewMatches(ListView):
     model = models.Match
     template_name = "matches.html"

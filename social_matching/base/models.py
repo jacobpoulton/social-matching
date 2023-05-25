@@ -109,7 +109,137 @@ class UserPreferences(models.Model):
 # Stores survey participation data associated with user details data.
 # Non-identifiable.
 class SurveyData(models.Model):
-    user = models.OneToOneField('UserDetails', on_delete=models.CASCADE)
+    user_details = models.OneToOneField('UserDetails', on_delete=models.CASCADE)
+
+    # Survey Response Data
+    SOCIAL_ISOLATION_CHOICES = [
+        (1, "Very socially isolated"),
+        (2, "Slightly socially isolated"),
+        (3, "Neither socially isolated or connected"),
+        (4, "Slightly socially connected"),
+        (5, "Very socially connected"),
+    ]
+    social_isolation_before = models.PositiveSmallIntegerField(
+        verbose_name="Before Participation",
+        choices=SOCIAL_ISOLATION_CHOICES,
+        blank=False, default='Unspecified',
+    )
+    social_isolation_during = models.PositiveSmallIntegerField(
+        verbose_name="During Participation",
+        choices=SOCIAL_ISOLATION_CHOICES,
+        blank=False, default='Unspecified',
+    )
+
+    # Group-related Data
+    group_contact = models.CharField(
+        verbose_name="Do you plan to keep in contact with anyone you met whilst participating?",
+        max_length=1,
+        choices=[("Y", "Yes"), ("N", "No"), ("M", "Maybe")],
+        null=True, blank=True, default='Unspecified',
+    )
+
+    GROUP_RELATION_CHOICES = [
+        (1, "None of them"),
+        (2, "A few of them"),
+        (3, "About half"),
+        (4, "Most of them"),
+        (5, "All of them"),
+    ]
+    group_relation_overall = models.PositiveSmallIntegerField(
+        verbose_name="You all got on well with each other.",
+        choices=GROUP_RELATION_CHOICES,
+        null=True, blank=True, default='Unspecified',
+    )
+    group_relation_agreeable = models.PositiveSmallIntegerField(
+        verbose_name="They were agreeable.",
+        choices=GROUP_RELATION_CHOICES,
+        null=True, blank=True, default='Unspecified',
+    )
+    group_relation_neuroticism = models.PositiveSmallIntegerField(
+        verbose_name="They were emotionally stable.",
+        choices=GROUP_RELATION_CHOICES,
+        null=True, blank=True, default='Unspecified',
+    )
+    group_relation_extroversion = models.PositiveSmallIntegerField(
+        verbose_name="They were extroverted.",
+        choices=GROUP_RELATION_CHOICES,
+        null=True, blank=True, default='Unspecified',
+    )
+    group_relation_introversion = models.PositiveSmallIntegerField(
+        verbose_name="They were introverted.",
+        choices=GROUP_RELATION_CHOICES,
+        null=True, blank=True, default='Unspecified',
+    )
+
+    group_additional = models.TextField(
+        verbose_name="Do you have any other thoughts or opinions regarding the group(s) you were matched with?",
+        null=True, blank=True, default=None,
+    )
+
+    # Game Related Data
+    game_gamer = models.PositiveSmallIntegerField(
+        verbose_name="To what extent would you consider yourself a gamer?",
+        choices=[
+            (1, "Not a gamer"),
+            (2, "Has played games"),
+            (3, "Casual gamer"),
+            (4, "Regular gamer"),
+            (5, "Hardcore gamer")
+        ],
+        null=True, blank=True, default='Unspecified',
+    )
+
+    GAME_AFFECTIVENESS_CHOICES = [
+        (1, "Strongly Disagree"),
+        (2, "Disagree"),
+        (3, "Neither agree nor disagree"),
+        (4, "Agree"),
+        (5, "Strongly Agree"),
+    ]
+    game_affectiveness_interaction = models.PositiveSmallIntegerField(
+        verbose_name="The game encouraged social interaction within your group.",
+        choices=GAME_AFFECTIVENESS_CHOICES,
+        null=True, blank=True, default='Unspecified',
+    )
+    game_affectiveness_approachable = models.PositiveSmallIntegerField(
+        verbose_name="The game is approachable <em>(1)</em>.",
+        choices=GAME_AFFECTIVENESS_CHOICES,
+        null=True, blank=True, default='Unspecified',
+    )
+    game_affectiveness_accessible = models.PositiveSmallIntegerField(
+        verbose_name="The game is easily available / accessible <em>(2)</em>.",
+        choices=GAME_AFFECTIVENESS_CHOICES,
+        null=True, blank=True, default='Unspecified',
+    )
+
+    game_additional = models.TextField(
+        verbose_name="Do you have any other thoughts or opinions about the game?",
+        null=True, blank=True, default=None,
+    )
+
+    # Concluding Data
+    WEBSITE_AFFECTIVENESS_CHOICES = [
+        (1, "1"),
+        (2, "2"),
+        (3, "3"),
+        (4, "4"),
+        (5, "5"),
+    ]
+    website_affectiveness_user_friendly = models.PositiveSmallIntegerField(
+        verbose_name="To what extent does the website feel <em>user-friendly</em>?",
+        choices=WEBSITE_AFFECTIVENESS_CHOICES,
+        null=True, blank=True, default='Unspecified',
+    )
+    website_affectiveness_accessible = models.PositiveSmallIntegerField(
+        verbose_name="To what extent does the website feel <em>accessible</em>?",
+        choices=WEBSITE_AFFECTIVENESS_CHOICES,
+        null=True, blank=True, default='Unspecified',
+    )
+
+    concluding_additional = models.TextField(
+        verbose_name="Do you have any final thoughts or comments?",
+        null=True, blank=True, default=None,
+    )
 
 
 # Match class.

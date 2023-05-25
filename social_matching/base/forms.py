@@ -1,6 +1,8 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import get_user_model
+from django.db.models import fields as model_fields
+from . import models
 
 
 # Modified user creation form to use the updated user class.
@@ -52,3 +54,17 @@ class ModifiedBigFiveInventory(forms.Form):
     q23 = forms.ChoiceField(choices=choices, widget=forms.RadioSelect,  label="Likes to cooperate with others")
     q24 = forms.ChoiceField(choices=choices, widget=forms.RadioSelect,  label="Tends to be quiet")
     q25 = forms.ChoiceField(choices=choices, widget=forms.RadioSelect,  label="Is generally trusting")
+
+
+class SurveyForm(forms.ModelForm):
+    class Meta:
+        model = models.SurveyData
+        exclude = ['user_details']
+        widgets = {
+            "group_contact": forms.RadioSelect,
+        }
+        for field in models.SurveyData()._meta.fields:
+            if type(field) == model_fields.PositiveSmallIntegerField:
+                widgets[field.name] = forms.RadioSelect
+            elif type(field) == model_fields.TextField:
+                widgets[field.name] = forms.Textarea(attrs={'rows': 4})

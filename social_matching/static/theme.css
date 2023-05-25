@@ -71,10 +71,10 @@
 ::-moz-selection {
     background: #fff3;
 }
-input::selection {
+input::selection, textarea::selection {
     background: #0003;
 }
-input::-moz-selection {
+input::-moz-selection, textarea::-moz-selection {
     background: #0003;
 }
 
