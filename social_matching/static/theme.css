@@ -140,7 +140,7 @@ fieldset {
 }
 
 .form-check-label {
-    margin-inline: var(--page-pad);
+    margin-inline: calc(var(--page-pad)/2);
     color: var(--orange_1);
 }
 

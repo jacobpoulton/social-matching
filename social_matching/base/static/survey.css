@@ -54,6 +54,10 @@ li {
     margin-inline: 0;
 }
 
+.form-check-label {
+    margin-inline: calc(var(--page-pad)/2);
+}
+
 .form-check-horizontal {
     flex-direction: row;
     align-items: flex-end;
@@ -63,5 +67,14 @@ li {
 
 .accordion-item {
     width: auto;
+    max-width: calc(100vw - 2*var(--page-pad));
     --bs-bg-opacity: 0;
+}
+
+/* Landscape */
+
+@media (min-aspect-ratio: 7/10) {
+    .form-check-label {
+        margin-inline: var(--page-pad);
+    }
 }
