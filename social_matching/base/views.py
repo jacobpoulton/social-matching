@@ -183,6 +183,36 @@ class SurveyView(FormView):
     template_name = 'survey.html'
     success_url = reverse_lazy('home')
 
+    def get_form_kwargs(self):
+        # Called initially to update kwargs as needed
+        kwargs = super(SurveyView, self).get_form_kwargs()
+
+        # Set the form instance if it has already been completed
+        if hasattr(self.request.user.details, "surveydata"):
+            kwargs.update({'instance': self.request.user.details.surveydata})
+
+        # Return updated kwargs
+        return kwargs
+
+    def form_valid(self, form):
+        # Called once valid form data has been submitted
+        redirect_url = super().form_valid(form)
+
+        # Get the model instance from the form
+        data = form.save(commit=False)
+
+        # Ensure that any none values get applied correctly
+        for name, value in form.cleaned_data.items():
+            if getattr(data, name) != value:
+                setattr(data, name, value)
+
+        # Apply the user details and save the model
+        data.user_details = self.request.user.details
+        data.save()
+
+        # Return user
+        return redirect_url
+
 
 class ViewMatches(ListView):
     model = models.Match

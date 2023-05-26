@@ -122,12 +122,12 @@ class SurveyData(models.Model):
     social_isolation_before = models.PositiveSmallIntegerField(
         verbose_name="Before Participation",
         choices=SOCIAL_ISOLATION_CHOICES,
-        blank=False, default='Unspecified',
+        blank=False, default=None,
     )
     social_isolation_during = models.PositiveSmallIntegerField(
         verbose_name="During Participation",
         choices=SOCIAL_ISOLATION_CHOICES,
-        blank=False, default='Unspecified',
+        blank=False, default=None,
     )
 
     # Group-related Data
@@ -135,7 +135,7 @@ class SurveyData(models.Model):
         verbose_name="Do you plan to keep in contact with anyone you met whilst participating?",
         max_length=1,
         choices=[("Y", "Yes"), ("N", "No"), ("M", "Maybe")],
-        null=True, blank=True, default='Unspecified',
+        null=True, blank=True, default=None,
     )
 
     GROUP_RELATION_CHOICES = [
@@ -148,27 +148,27 @@ class SurveyData(models.Model):
     group_relation_overall = models.PositiveSmallIntegerField(
         verbose_name="You all got on well with each other.",
         choices=GROUP_RELATION_CHOICES,
-        null=True, blank=True, default='Unspecified',
+        null=True, blank=True, default=None,
     )
     group_relation_agreeable = models.PositiveSmallIntegerField(
         verbose_name="They were agreeable.",
         choices=GROUP_RELATION_CHOICES,
-        null=True, blank=True, default='Unspecified',
+        null=True, blank=True, default=None,
     )
     group_relation_neuroticism = models.PositiveSmallIntegerField(
         verbose_name="They were emotionally stable.",
         choices=GROUP_RELATION_CHOICES,
-        null=True, blank=True, default='Unspecified',
+        null=True, blank=True, default=None,
     )
     group_relation_extroversion = models.PositiveSmallIntegerField(
         verbose_name="They were extroverted.",
         choices=GROUP_RELATION_CHOICES,
-        null=True, blank=True, default='Unspecified',
+        null=True, blank=True, default=None,
     )
     group_relation_introversion = models.PositiveSmallIntegerField(
         verbose_name="They were introverted.",
         choices=GROUP_RELATION_CHOICES,
-        null=True, blank=True, default='Unspecified',
+        null=True, blank=True, default=None,
     )
 
     group_additional = models.TextField(
@@ -186,7 +186,7 @@ class SurveyData(models.Model):
             (4, "Regular gamer"),
             (5, "Hardcore gamer")
         ],
-        null=True, blank=True, default='Unspecified',
+        null=True, blank=True, default=None,
     )
 
     GAME_AFFECTIVENESS_CHOICES = [
@@ -199,17 +199,17 @@ class SurveyData(models.Model):
     game_affectiveness_interaction = models.PositiveSmallIntegerField(
         verbose_name="The game encouraged social interaction within your group.",
         choices=GAME_AFFECTIVENESS_CHOICES,
-        null=True, blank=True, default='Unspecified',
+        null=True, blank=True, default=None,
     )
     game_affectiveness_approachable = models.PositiveSmallIntegerField(
         verbose_name="The game is approachable <em>(1)</em>.",
         choices=GAME_AFFECTIVENESS_CHOICES,
-        null=True, blank=True, default='Unspecified',
+        null=True, blank=True, default=None,
     )
     game_affectiveness_accessible = models.PositiveSmallIntegerField(
         verbose_name="The game is easily available / accessible <em>(2)</em>.",
         choices=GAME_AFFECTIVENESS_CHOICES,
-        null=True, blank=True, default='Unspecified',
+        null=True, blank=True, default=None,
     )
 
     game_additional = models.TextField(
@@ -228,12 +228,12 @@ class SurveyData(models.Model):
     website_affectiveness_user_friendly = models.PositiveSmallIntegerField(
         verbose_name="To what extent does the website feel <em>user-friendly</em>?",
         choices=WEBSITE_AFFECTIVENESS_CHOICES,
-        null=True, blank=True, default='Unspecified',
+        null=True, blank=True, default=None,
     )
     website_affectiveness_accessible = models.PositiveSmallIntegerField(
         verbose_name="To what extent does the website feel <em>accessible</em>?",
         choices=WEBSITE_AFFECTIVENESS_CHOICES,
-        null=True, blank=True, default='Unspecified',
+        null=True, blank=True, default=None,
     )
 
     concluding_additional = models.TextField(

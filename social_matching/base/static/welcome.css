@@ -19,8 +19,8 @@ a:hover {
 }
 
 .btn {
-    background: inherit;
-    background-size: 200%;
+    /* background: inherit; */
+    /* background-size: 200%; */
 }
 
 .bg-dark {
