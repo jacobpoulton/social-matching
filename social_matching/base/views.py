@@ -178,6 +178,51 @@ class GiveDetailsView(FormView):
         return redirect_url
 
 
+class SurveyView(FormView):
+    form_class = forms.SurveyForm
+    template_name = 'survey.html'
+    success_url = reverse_lazy('home')
+
+    def dispatch(self, request, *args, **kwargs):
+        # Called when view is loaded
+        # Redirect away from survey if not open yet
+        if not settings.SURVEY_OPEN:
+            return redirect('home')
+
+        # Return survey view as normal if survey open
+        return super(SurveyView, self).dispatch(request, *args, **kwargs)
+
+    def get_form_kwargs(self):
+        # Called initially to update kwargs as needed
+        kwargs = super(SurveyView, self).get_form_kwargs()
+
+        # Set the form instance if it has already been completed
+        if hasattr(self.request.user.details, "surveydata"):
+            kwargs.update({'instance': self.request.user.details.surveydata})
+
+        # Return updated kwargs
+        return kwargs
+
+    def form_valid(self, form):
+        # Called once valid form data has been submitted
+        redirect_url = super().form_valid(form)
+
+        # Get the model instance from the form
+        data = form.save(commit=False)
+
+        # Ensure that any none values get applied correctly
+        for name, value in form.cleaned_data.items():
+            if getattr(data, name) != value:
+                setattr(data, name, value)
+
+        # Apply the user details and save the model
+        data.user_details = self.request.user.details
+        data.save()
+
+        # Return user
+        return redirect_url
+
+
 class ViewMatches(ListView):
     model = models.Match
     template_name = "matches.html"

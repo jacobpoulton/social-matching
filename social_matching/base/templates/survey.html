@@ -1,0 +1,306 @@
+{% extends "root.html" %}
+{% load bootstrap5 %}
+
+{% block header %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'welcome.css' %}">
+    <link rel="stylesheet" href="{% static 'survey.css' %}">
+{% endblock %}
+
+{% block content %}
+    <h1 class="fs-1">Participant Experience Survey</h1>
+    <p style="color: #fffc;" class="fs-4 mb-5">This questionnaire is designed to assess the effectiveness of this project. Filling it out will help greatly and is very appreciated. All responses will be anonymised. Please answer as accurately and honestly as you can, and feel free to give any extra information that you think of. Thank you for your time.</p>
+    <form method="post" action="{% url 'survey' %}">
+        {% csrf_token %}
+        <div class="scale-container">
+            <h3 class="fs-4 ps-3 mb-4">How socially isolated did you feel at the following moments? <span style="color:var(--pink_1);">*</span></h3>
+            <div class="side-options">
+                <span></span>
+                <fieldset>
+                    {% for radio in form.social_isolation_before %}
+                        <div class="form-check form-check-inline">
+                            <label class="form-check-label fs-5">
+                                {{ radio.choice_label }}
+                            </label>
+                        </div>
+                    {% endfor %}
+                </fieldset>
+            </div>
+            <div class="side-options">
+                <span class="fs-5">{{ form.social_isolation_before.label|safe }}</span>
+                <fieldset>
+                    {% for radio in form.social_isolation_before %}
+                        <div class="form-check form-check-inline">
+                            <{{ radio.tag|cut:"<"|cut:">" }} class="form-check-input">
+                        </div>
+                    {% endfor %}
+                </fieldset>
+            </div>
+            <div class="side-options">
+                <span class="fs-5">{{ form.social_isolation_during.label|safe }}</span>
+                <fieldset>
+                    {% for radio in form.social_isolation_during %}
+                        <div class="form-check form-check-inline">
+                            <{{ radio.tag|cut:"<"|cut:">" }} class="form-check-input">
+                        </div>
+                    {% endfor %}
+                </fieldset>
+            </div>
+        </div>
+        <div class="scale-container accordion mb-4">
+            <div class="accordion-item bg-dark">
+                <h2 class="accordion-header mt-0">
+                    <button class="accordion-button bg-dark" type="button" data-bs-toggle="collapse" data-bs-target="#collapseGroup" aria-expanded="true" aria-controls="collapseGroup">
+                        <h2 class="fs-2">Your Group</h2>
+                    </button>
+                </h2>
+                <div id="collapseGroup" class="accordion-collapse collapse show">
+                    <div class="accordion-body">
+                        <div class="scale-container full-width mb-5">
+                            <legend>{{ form.group_contact.label|safe }}</legend>
+                            <fieldset class="scales-vertical">
+                                {% for radio in form.group_contact|slice:"1:" %}
+                                    <div class="form-check form-check-inline form-check-horizontal">
+                                        <{{ radio.tag|cut:"<"|cut:">" }} class="form-check-input">
+                                        <label class="form-check-label" for="{{ radio.id_for_label }}">
+                                            {{ radio.choice_label }}
+                                        </label>
+                                    </div>
+                                {% endfor %}
+                            </fieldset>
+                        </div>
+                        <div class="scale-container full-width mb-5">
+                            <h3 class="fs-4 mb-4">For the following statements, please select how many of your group members you feel fit each statement.</h3>
+                            <div class="side-options">
+                                <span></span>
+                                <fieldset>
+                                    {% for radio in form.group_relation_overall|slice:"1:" %}
+                                        <div class="form-check form-check-inline">
+                                            <label class="form-check-label fs-5">
+                                                {{ radio.choice_label }}
+                                            </label>
+                                        </div>
+                                    {% endfor %}
+                                </fieldset>
+                            </div>
+                            <div class="side-options">
+                                <span class="fs-5">{{ form.group_relation_overall.label|safe }}</span>
+                                <fieldset>
+                                    {% for radio in form.group_relation_overall|slice:"1:" %}
+                                        <div class="form-check form-check-inline">
+                                            <{{ radio.tag|cut:"<"|cut:">" }} class="form-check-input">
+                                        </div>
+                                    {% endfor %}
+                                </fieldset>
+                            </div>
+                            <div class="side-options">
+                                <span class="fs-5">{{ form.group_relation_agreeable.label|safe }}</span>
+                                <fieldset>
+                                    {% for radio in form.group_relation_agreeable|slice:"1:" %}
+                                        <div class="form-check form-check-inline">
+                                            <{{ radio.tag|cut:"<"|cut:">" }} class="form-check-input">
+                                        </div>
+                                    {% endfor %}
+                                </fieldset>
+                            </div>
+                            <div class="side-options">
+                                <span class="fs-5">{{ form.group_relation_neuroticism.label|safe }}</span>
+                                <fieldset>
+                                    {% for radio in form.group_relation_neuroticism|slice:"1:" %}
+                                        <div class="form-check form-check-inline">
+                                            <{{ radio.tag|cut:"<"|cut:">" }} class="form-check-input">
+                                        </div>
+                                    {% endfor %}
+                                </fieldset>
+                            </div>
+                            <div class="side-options">
+                                <span class="fs-5">{{ form.group_relation_extroversion.label|safe }}</span>
+                                <fieldset>
+                                    {% for radio in form.group_relation_extroversion|slice:"1:" %}
+                                        <div class="form-check form-check-inline">
+                                            <{{ radio.tag|cut:"<"|cut:">" }} class="form-check-input">
+                                        </div>
+                                    {% endfor %}
+                                </fieldset>
+                            </div>
+                            <div class="side-options">
+                                <span class="fs-5">{{ form.group_relation_introversion.label|safe }}</span>
+                                <fieldset>
+                                    {% for radio in form.group_relation_introversion|slice:"1:" %}
+                                        <div class="form-check form-check-inline">
+                                            <{{ radio.tag|cut:"<"|cut:">" }} class="form-check-input">
+                                        </div>
+                                    {% endfor %}
+                                </fieldset>
+                            </div>
+                        </div>
+                        <div class="scale-container full-width">
+                            <legend>{{ form.group_additional.label }}</legend>
+                            {{ form.group_additional }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item bg-dark">
+                <h2 class="accordion-header mt-0">
+                    <button class="accordion-button bg-dark collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseGame" aria-expanded="true" aria-controls="collapseGame">
+                        <h2 class="fs-2">The Game</h2>
+                    </button>
+                </h2>
+                <div id="collapseGame" class="accordion-collapse collapse">
+                    <div class="accordion-body">
+                        <div class="scale-container full-width mb-5">
+                            <legend>{{ form.game_gamer.label|safe }}</legend>
+                            <fieldset>
+                                {% for radio in form.game_gamer|slice:"1:" %}
+                                    <div class="form-check form-check-inline">
+                                        <{{ radio.tag|cut:"<"|cut:">" }} class="form-check-input">
+                                        <label class="form-check-label" for="{{ radio.id_for_label }}">
+                                            {{ radio.choice_label }}
+                                        </label>
+                                    </div>
+                                {% endfor %}
+                            </fieldset>
+                        </div>
+                        <div class="scale-container full-width mb-5">
+                            <h3 class="fs-4 mb-4">For the following statements, please select the extent to which you agree with them.</h3>
+                            <div class="side-options">
+                                <span></span>
+                                <fieldset>
+                                    {% for radio in form.game_affectiveness_interaction|slice:"1:" %}
+                                        <div class="form-check form-check-inline">
+                                            <label class="form-check-label fs-5">
+                                                {{ radio.choice_label }}
+                                            </label>
+                                        </div>
+                                    {% endfor %}
+                                </fieldset>
+                            </div>
+                            <div class="side-options">
+                                <span class="fs-5">{{ form.game_affectiveness_interaction.label|safe }}</span>
+                                <fieldset>
+                                    {% for radio in form.game_affectiveness_interaction|slice:"1:" %}
+                                        <div class="form-check form-check-inline">
+                                            <{{ radio.tag|cut:"<"|cut:">" }} class="form-check-input">
+                                        </div>
+                                    {% endfor %}
+                                </fieldset>
+                            </div>
+                            <div class="side-options">
+                                <span class="fs-5">{{ form.game_affectiveness_approachable.label|safe }}</span>
+                                <fieldset>
+                                    {% for radio in form.game_affectiveness_approachable|slice:"1:" %}
+                                        <div class="form-check form-check-inline">
+                                            <{{ radio.tag|cut:"<"|cut:">" }} class="form-check-input">
+                                        </div>
+                                    {% endfor %}
+                                </fieldset>
+                            </div>
+                            <div class="side-options">
+                                <span class="fs-5">{{ form.game_affectiveness_accessible.label|safe }}</span>
+                                <fieldset>
+                                    {% for radio in form.game_affectiveness_accessible|slice:"1:" %}
+                                        <div class="form-check form-check-inline">
+                                            <{{ radio.tag|cut:"<"|cut:">" }} class="form-check-input">
+                                        </div>
+                                    {% endfor %}
+                                </fieldset>
+                            </div>
+                            <ol class="fs-5 text-start mt-4">
+                                <li><b>Approachable</b> meaning that you personally feel able to fully participate in the game with the other players, without it feeling too difficult / left out / etc.</li>
+                                <li><b>Available / accessible</b> meaning that you were able to obtain and play the game without any barriers, such as price / device required / region locks / etc.</li>
+                            </ol>
+                        </div>
+                        <div class="scale-container full-width">
+                            <legend>{{ form.game_additional.label }}</legend>
+                            {{ form.game_additional }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item bg-dark">
+                <h2 class="accordion-header mt-0">
+                    <button class="accordion-button bg-dark collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseConclusion" aria-expanded="true" aria-controls="collapseConclusion">
+                        <h2 class="fs-2">Conclusion</h2>
+                    </button>
+                </h2>
+                <div id="collapseConclusion" class="accordion-collapse collapse">
+                    <div class="accordion-body">
+                        <div class="scale-container full-width mb-5">
+                            <legend>{{ form.website_affectiveness_user_friendly.label|safe }}</legend>
+                            <div class="side-options">
+                                <span>Not at all</span>
+                                <fieldset>
+                                    {% for radio in form.website_affectiveness_user_friendly|slice:"1:" %}
+                                        <div class="form-check form-check-inline">
+                                            <{{ radio.tag|cut:"<"|cut:">" }} class="form-check-input">
+                                            <label class="form-check-label" for="{{ radio.id_for_label }}">
+                                                {{ radio.choice_label }}
+                                            </label>
+                                        </div>
+                                    {% endfor %}
+                                </fieldset>
+                                <span>Completely</span>
+                            </div>
+                        </div>
+                        <div class="scale-container full-width mb-5">
+                            <legend>{{ form.website_affectiveness_accessible.label|safe }}</legend>
+                            <div class="side-options">
+                                <span>Not at all</span>
+                                <fieldset>
+                                    {% for radio in form.website_affectiveness_accessible|slice:"1:" %}
+                                        <div class="form-check form-check-inline">
+                                            <{{ radio.tag|cut:"<"|cut:">" }} class="form-check-input">
+                                            <label class="form-check-label" for="{{ radio.id_for_label }}">
+                                                {{ radio.choice_label }}
+                                            </label>
+                                        </div>
+                                    {% endfor %}
+                                </fieldset>
+                                <span>Completely</span>
+                            </div>
+                        </div>
+                        <div class="scale-container full-width">
+                            <legend>{{ form.concluding_additional.label }}</legend>
+                            {{ form.concluding_additional }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <p>You may update your response any time before the project ends.</p>
+        <button type="submit" class="btn btn-success" value="survey">Save Response</button>
+        <input type="hidden" name="next" value="{{ next }}">
+    </form>
+{% endblock %}
+{% block scripts %}
+    <script>
+        // Ensure that any pre-selected radios are already active
+        $(':radio:checked').addClass('active');
+
+        // Allow radios to be toggled off
+        $(':radio').on('click', function(e) {
+            let $this = $(this);
+
+            if ($this.hasClass('active')) {
+                // This radio was already active, it can be deactivated
+                $this.removeClass('active');
+                $this.prop('checked', false);
+            } else {
+                // Deactivate all other radios
+                let id = $this.attr('id')
+                let id_prefix = id.substring(0, id.length-1);
+                $('[id^="' + id_prefix + '"]').removeClass('active').prop('checked', false);
+
+                // Then activate the now selected radio
+                $this.addClass('active');
+                $this.prop('checked', true);
+            }
+        });
+
+        // Do not include deselected radios in the submitted form
+        $('form').submit(function() {
+            $(':radio').not(':checked').removeAttr('value');
+        });
+    </script>
+{% endblock %}

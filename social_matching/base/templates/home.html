@@ -11,8 +11,15 @@
     <p class="fw-light" style="color:var(--pink_1);">You can set email <span class="fw-normal">notification preferences</span>, <span class="fw-normal">your contact info</span>, as well as <span class="fw-normal">delete your account</span> below in <span style="color:white;">'Preferences'</span>.</p>
     <hr>
     {% if survey_open %}
-        <a class="btn btn-success btn-big" href="#" role="button">Take Survey</a>
-        <p>Filling out this anonymised questionnaire is highly appreciated, every response has an impact on the research.</p>
+        <div style="margin-block: 4.5rem;">
+            <span>The closing survey is now open!</span>
+            <div class="card card-survey bg-dark mt-4">
+                <div class="card-body">
+                    <a class="btn btn-success btn-big" href="{% url 'survey' %}" role="button">Take Survey</a>
+                    <p class="fw-light" style="color:var(--pink_1);">Filling out this anonymised questionnaire is highly appreciated, <span style="color:white;">every response has an impact on the research.</span></p>
+                </div>
+            </div>
+        </div>
         <hr>
     {% endif %}
     <h2 class="fs-1">Matching</h2>

@@ -1,0 +1,80 @@
+/* Base Elements */
+
+textarea {
+    padding: calc(2*var(--page-pad));
+    margin: calc(2*var(--page-pad));
+    border-radius: var(--page-pad);
+}
+
+legend em, .side-options span em {
+    font-style: normal;
+    color: var(--pink_1);
+}
+
+li {
+    padding-block: calc(0.5*var(--page-pad));
+}
+
+/* Custom CSS Classes */
+
+.scale-container+.accordion {
+    padding: 0;
+}
+
+.full-width {
+    width: 100%;
+    margin-inline: 0;
+}
+
+.side-options {
+    display: flex;
+    align-items: center;
+}
+
+.side-options span {
+    color: #fffd;
+    width: 25%;
+    padding-block: var(--page-pad);
+}
+
+.scales-vertical {
+    grid-template-columns: 100%;
+    justify-items: start;
+}
+
+/* Bootstrap Overrides */
+
+.form-check-inline {
+    flex-direction: column-reverse;
+    align-items: center;
+    padding: 0;
+}
+
+.form-check .form-check-input {
+    margin-inline: 0;
+}
+
+.form-check-label {
+    margin-inline: calc(var(--page-pad)/2);
+}
+
+.form-check-horizontal {
+    flex-direction: row;
+    align-items: flex-end;
+    margin-left: 40%;
+    padding-block: calc(0.5*var(--page-pad));
+}
+
+.accordion-item {
+    width: auto;
+    max-width: calc(100vw - 2*var(--page-pad));
+    --bs-bg-opacity: 0;
+}
+
+/* Landscape */
+
+@media (min-aspect-ratio: 7/10) {
+    .form-check-label {
+        margin-inline: var(--page-pad);
+    }
+}

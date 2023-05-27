@@ -19,8 +19,8 @@ a:hover {
 }
 
 .btn {
-    background: inherit;
-    background-size: 200%;
+    /* background: inherit; */
+    /* background-size: 200%; */
 }
 
 .bg-dark {
@@ -28,7 +28,7 @@ a:hover {
 }
 
 .accordion {
-    box-shadow: 0px 10px 20px 0px #fff2;
+    /* box-shadow: 0px 10px 20px 0px #fff2; */
     border-color: #fff1;
 }
 
