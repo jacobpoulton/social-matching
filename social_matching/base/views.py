@@ -183,6 +183,15 @@ class SurveyView(FormView):
     template_name = 'survey.html'
     success_url = reverse_lazy('home')
 
+    def dispatch(self, request, *args, **kwargs):
+        # Called when view is loaded
+        # Redirect away from survey if not open yet
+        if not settings.SURVEY_OPEN:
+            return redirect('home')
+
+        # Return survey view as normal if survey open
+        return super(SurveyView, self).dispatch(request, *args, **kwargs)
+
     def get_form_kwargs(self):
         # Called initially to update kwargs as needed
         kwargs = super(SurveyView, self).get_form_kwargs()
